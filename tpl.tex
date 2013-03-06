@@ -1,0 +1,205 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{polski}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Twierdzenie}
+\newtheorem{lemma}{Lemat}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definicja}
+\newtheorem*{example}{Przykład}
+
+\newcommand{\impl}{\rightarrow}
+\newcommand{\N}{\mathbb{N}}
+
+\newcommand{\header}[1]{\noindent\textbf{#1}}
+
+\title{Teoria Programowanie w Logice}
+\author{}
+\date{Semestr letni 2013}
+
+\begin{document}
+\maketitle
+
+\section{Dowody Hilberta}
+
+\header{Język:}
+
+\begin{itemize}
+  \item przeliczalnie wiele zmiennych: $\{x_i\}_{i\in\N}$;
+  \item funktory: $\impl, \neg$;
+  \item zbiór formuł sensownych $S$: najmniejszy zbiór, taki że:
+  \begin{enumerate}
+    \item $\{x_i\} \subset S$;
+    \item jeśli $A, B \in S$, to $A \impl B \in S$ i $\neg A \in S$.
+  \end{enumerate}
+\end{itemize}
+
+\begin{definition}
+$D \subset S$ jest zamknięty na Modus Ponens (MP), gdy
+$$\text{jeśli } A \impl B \in D \text{ i } A \in D \text{, to } B \in D.$$
+\end{definition}
+
+\begin{lemma}
+Jeśli $\alpha$ to pewna rodzina zbiorów zamkniętych na MP,
+to $\bigcap\alpha$ jest zamknięty na MP.
+\end{lemma}
+
+\begin{lemma}
+Jeśli $\alpha$ to pewna rodzina zbiorów zamkniętych na MP, która jest łańcuchem,
+to $\bigcup\alpha$ jest zamknięty na MP.
+\end{lemma}
+
+\begin{lemma}
+Dla każdego $X \subset S$ istnieje najmniejszy zbiór $Y$, taki że
+\begin{enumerate}
+  \item $X \subset Y$;
+  \item $Y$ jest zamknięty na MP.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+$Y = \bigcap \{
+  Z \subset S : X \subset Z \text{ i } Z \text { zamknięty na MP}
+\}.$
+\end{proof}
+
+Taki $Y$ nazywamy \emph{konsekwencją} $X$. ($Cn: 2^S \ni X \mapsto Y \in 2^S$)
+
+\bigskip
+
+\header{Fakty o $Cn$}
+
+\begin{enumerate}
+  \item Jeśli $X$ jest zamknięty na MP, to $Cn(X) = X$.
+  \item $X \subset Cn(X)$.
+  \item Jeśli $X \subset Y$, to $Cn(X) \subset Cn(Y)$.
+  \item $Cn(Cn(X)) = Cn(X)$.
+  \item $Cn(X) = \bigcup\{
+    Cn(Y) : Y \subset X \text{ i } X \text{ jest skończony}
+  \}$.
+    \begin{proof}
+      $\supset$ -- trywialny. $\subset$ -- Wystarczy pokazać, że prawa strona
+      jest zamknięta na MP. $A \impl B \in \bigcup \{ \ldots \}$, więc
+      $A \impl B \in Cn(Y_1)$, $A \in \bigcup \{ \ldots \}$, więc
+      $A \in Cn(Y_2)$, zatem $B \in Cn(Y_1 \cup Y_2)$.
+      Na koniec zauważamy, że $Y_1 \cup Y_2$ jest skończonym podzbiorem $X$.
+    \end{proof}
+  \item $Cn(\emptyset) = \emptyset$.
+\end{enumerate}
+
+\bigskip
+
+\header{Alternatywne opisy $Cn$}
+\begin{align*}
+& H^i: 2^S \to 2^S\\
+& H^0(X) = X\\
+& H^{n+1}(X) = H^n(X) \cup \{
+    B \in S : \exists_{A \in S} (A \impl B \in H^n(X) \text{ i } A \in H^n(X))
+  \}\\
+& H(X) = \bigcup_{n = 0}^\infty H^n(X)
+\end{align*}
+
+\begin{lemma}
+$Cn(X) = H(X).$
+\end{lemma}
+
+\begin{proof}
+$\subset$ -- łatwy, $\supset$ -- przez indukcję ze względu na $n$.
+\end{proof}
+
+\begin{definition}[Dowód Hilberta]
+$A \in S$ ma dowód Hilberta ze zbioru formuł $X$, gdy istnieje skończony ciąg
+formuł $A_0, A_1, \ldots, A_n$, taki że $A_n = A$ i dla każdego $i$:
+\begin{itemize}
+  \item $A_i \in X$ lub
+  \item istnieją $A_j, A_k$, takie że $j, k < i$ i $A_j = A_k \impl A_i$.
+\end{itemize}
+\end{definition}
+
+%TODO: tu by można jeszcze wspomnieć o drzewowej reprezentacji dowodu.
+
+\begin{definition}[Konsewkencja dowodowa]
+$Cn^*(X) := \{ A \in S: A \text{ ma dowód z } X\}$
+\end{definition}
+
+\begin{lemma}
+$Cn(X) = Cn^*(X)$
+\end{lemma}
+
+\begin{proof}
+$\supset$ -- przez indukcję ze względu na długość dowodu,
+$\subset$ -- przez sklejenie dowodów Hilberta.
+%TODO: tę drugą część można by rozpisać dokładniej.
+\end{proof}
+
+\bigskip
+
+\begin{definition}[Logika klasyczna]
+Niech $L \subset S$ będzie najmniejszym zbiorem zawierającym (dla dowolnych
+$A, B, C \in S$)
+\begin{itemize}
+  \item $K: A \impl (A \impl B)$
+  \item $S: (A \impl (B \impl C)) \impl ((A \impl B) \impl (A \impl C))$
+  \item $N: (\neg A \impl \neg B) \impl ((\neg A \impl B) \impl A)$
+\end{itemize}
+oraz zamkniętym na MP.
+\end{definition}
+
+\begin{example}
+$I: A \impl A \in L$, ponieważ:
+\begin{itemize}
+  \item $(A \impl (B \impl A)) \impl ((A \impl B) \impl (A \impl A))$
+    \quad(aksjomat $S$)
+  \item $A \impl (B \impl A)$ \quad(aksjomat $K$)
+  \item $(A \impl B) \impl (A \impl A)$ \quad(Modus Ponens)
+  \item $(A \impl (C \impl A)) \impl (A \impl A)$ \quad($B := C \impl A$)
+  \item $A \impl (C \impl A)$ \quad(aksjomat $K$)
+  \item $A \impl A$ \quad(Modus Ponens)
+\end{itemize}
+\end{example}
+
+\noindent Notacja: $Cn_L(X) := C_n(L \cup X)$.
+
+\begin{theorem}[O dedukcji wprost, TDW]
+$b \in Cn_L(X \cup \{a\})$ wtedy i tylko wtedy, gdy $a \impl b \in Cn_L(X)$.
+\end{theorem}
+
+\begin{proof}
+$\Leftarrow$ -- trywialny. $\Rightarrow$ -- przez indukcję ze względu
+na długość dowodu $b$.  %TODO: napisać tę drugą część.
+\end{proof}
+
+\begin{theorem}[O dedukcji nie wprost]
+Jeśli $z, \neg z \in Cn_L(X \cup \{a, \neg b\})$, to $a \impl b \in Cn_L(X)$.
+\end{theorem}
+
+\begin{proof}
+\begin{flalign*}
+\neg b \impl z &\in Cn_L(X \cup \{a\}) && \text{z TDW}\\
+\neg b \impl \neg z &\in Cn_L(X \cup \{a\}) && \text{z TDW}\\
+(\neg b \impl \neg z) \impl ((\neg b \impl z) \impl b) 
+  &\in L \subset Cn_L(X \cup\{a\}) && \text{aksjomat N}\\
+b &\in Cn_L(X \cup \{a\}) && \text{MP} \times 2\\
+a \impl b &\in Cn_L(X) && \text{TDW}
+\end{flalign*}
+\end{proof}
+
+\begin{theorem}
+Jeśli $L' \subset S$ jest zbiorem zamkniętym na MP, w którym prawdziwe jest TDW,
+to $K, S \in L'$.
+\end{theorem}
+
+\begin{proof}
+%TODO: napisać dowód.
+\end{proof}
+
+\end{document}
