@@ -2,6 +2,7 @@
 *.acr
 *.alg
 *.aux
+*.bak
 *.bbl
 *.blg
 *.dvi
@@ -23,6 +24,7 @@
 *.nlo
 *.out
 *.pdfsync
+*.pdf
 *.ps
 *.snm
 *.synctex.gz
