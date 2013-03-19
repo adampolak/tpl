@@ -213,6 +213,13 @@ to $K, S, N \in L'$.
 
 %TODO: dygresja: TDW i TDN jako transformacje drzew dowodowych.
 
+\begin{theorem}[Prawo Pierce'a]
+$(p \impl q) \impl ((\neg p \impl q) \impl q) \in L.$
+\end{theorem}
+
+%TODO: Na wykładzie wydawało mi się, że to właśnie jest prawo Pierce'a
+%      ale internet twierdzi co innego.
+
 \begin{definition}
 Zbiór $X \subset S$ jest sprzeczny, gdy $Cn_L(X) = S$.
 \end{definition}
@@ -232,9 +239,40 @@ $Y \supset X$, który jest zamknięty na MP, niesprzeczny i zupełny.
 %stałoby się ogólniejsze. Ale prof Zaionc trzyma się wersji z Cn_L, więc
 %i my się jej trzymajmy.
 
-\begin{proof}Z lematu Kuratowskiego-Zorna.\end{proof}
+\begin{proof}[Dowód kreatywny]
+Formuły to skończone napisy nad przeliczalnym alfabetem, zatem jest ich
+przeliczalnie wiele. Możemy więc ustawić je w ciąg $s_0, s_1, \ldots$. 
+Rozważmy ciąg $Y_i$, taki że $Y_0 = Cn_L(X)$ oraz
 
-%TODO: można dopisać dowód bez LKZ z indukcyjną definicją zbioru Y.
+$$Y_{n+1} = \begin{cases}
+  Cn_L(Y_n \cup \{s_n\}) & 
+    \text{jeśli } Y_n \cup \{s_n\} \text{ jest niesprzeczny}\\
+  Y_n & \text{wpp.}
+\end{cases}$$
+
+Niech $Y = \bigcup_{i\in\N} Y_i$. Wystarczy wykazać, że $Y$ ma własności
+przedstawione w tezie.
+
+Z definicji wynika, że zbiory $Y_i$ są zamknięte na MP, niesprzeczne 
+i tworzą łańcuch. Łatwo można wykazać, że w takim razie również ich
+suma jest zamknięta na MP i niesprzeczna.
+
+Zupełność wymaga nieco więcej uwagi. Dowód przeprowadzimy nie wprost.
+Załóżmy, że istnieje formuła $a$ taka, że $a, \neg a \not \in Y$.
+Niech $a = s_i$ oraz $\neg a = s_j$. Skoro $a \not \in Y$, to
+w szczególności $a \not \in Y_{i+1}$, zatem z definicji $Y_i \cup \{a\}$
+jest sprzeczny. Analogicznie $Y_j \cup \{\neg a\}$ jest sprzeczny.
+Oznaczmy $k=\max(i, j)$. Wtedy $Y_i,Y_j \subset Y_k$ i z monotoniczności
+konsekwencji mamy, że $Cn_L(Y_k \cup \{a\}) = Cn_L(Y_k \cup \{\neg a\}) = S$.
+
+Weźmy dowolną formułę $b \in S$. Z TDW mamy, że
+$a \impl b, \neg a \impl b \in Cn_L(Y_k)$. Stosując prawo Pierce'a możemy
+wykazać, że $b \in Y_k$. Skoro jednak $b$ było dowolną formułą, to
+$Y_k = S$, co prowadzi do sprzeczności z faktem, że zbiory $Y_i$ są
+niesprzeczne.
+\end{proof}
+
+\begin{proof}[Dowód bezmyślny]Z lematu Kuratowskiego-Zorna.\end{proof}
 
 \begin{theorem}[Relatywne twierdzenie Lindenbauma]
 
