@@ -29,7 +29,7 @@
 \begin{document}
 \maketitle
 
-\section{Dowody Hilberta}
+\section{Dowody Hilberta i twierdzenie Posta o pełności}
 
 \header{Język:}
 
@@ -178,7 +178,7 @@ $\Leftarrow$ -- trywialny. $\Rightarrow$ -- przez indukcję ze względu
 na długość dowodu $b$.  %TODO: napisać tę drugą część.
 \end{proof}
 
-\begin{theorem}[O dedukcji nie wprost]
+\begin{theorem}[O dedukcji nie wprost, TDN]
 Jeśli $z, \neg z \in Cn_L(X \cup \{a, \neg b\})$, to $a \impl b \in Cn_L(X)$.
 \end{theorem}
 
@@ -201,5 +201,130 @@ to $K, S \in L'$.
 \begin{proof}
 %TODO: napisać dowód.
 \end{proof}
+
+\begin{theorem}
+Jeśli $L' \subset S$ jest zbiorem zamkniętym na MP, w którym prawdziwe jest TDN,
+to $K, S, N \in L'$.
+\end{theorem}
+
+\begin{proof}
+%TODO: napisać dowód.
+\end{proof}
+
+%TODO: dygresja: TDW i TDN jako transformacje drzew dowodowych.
+
+\begin{definition}
+Zbiór $X \subset S$ jest sprzeczny, gdy $Cn_L(X) = S$.
+\end{definition}
+
+\begin{definition}
+Zbiór $X \subset S$ jest zupełny, gdy 
+$\forall_{a \in S} a \in S \text{ lub } \neg a \in S$.
+\end{definition}
+
+\begin{theorem}[Twierdzenie Lindenbauma]
+Dowolny niesprzeczny zbiór $X \subset S$ może być rozszerzony do zbioru
+$Y \supset X$, który jest zamknięty na MP, niesprzeczny i zupełny.
+\end{theorem}
+
+%Uwaga: Zarówno w twierdzeniu jak i powyższych definicjach, można by
+%używać Cn zamiast Cn_L -- wszystko byłoby dalej prawdziwe, a twierdzenie
+%stałoby się ogólniejsze. Ale prof Zaionc trzyma się wersji z Cn_L, więc
+%i my się jej trzymajmy.
+
+\begin{proof}Z lematu Kuratowskiego-Zorna.\end{proof}
+
+%TODO: można dopisać dowód bez LKZ z indukcyjną definicją zbioru Y.
+
+\begin{theorem}[Relatywne twierdzenie Lindenbauma]
+
+Dla każdego zbioru $X \subset S$, takiego że $X = Cn_L(X)$, oraz każdej
+formuły $a \not \in X$ istnieje zbiór $Y \subset S$, taki że
+\begin{itemize}
+  \item $Y \supset X$,
+  \item $Y$ jest zamknięty na MP,
+  \item $a \not \in Y$,
+  \item $\forall_{b \not \in Y} a \in Cn_L(Y \cup \{b\})$ 
+    ($Y$ nie da się już rozszerzyć zachowując powyższe warunki).
+\end{itemize}
+\end{theorem}
+
+\begin{proof}Jak wyżej.\end{proof}
+
+\begin{definition}
+Matrycą logiczną nazywamy czwórkę $M=(U, U^*, f^\impl, f^\neg)$, taką że
+\begin{itemize}
+  \item $U \neq \emptyset$ -- wartości logiczne
+  \item $\emptyset \neq U^* \subset U$ -- wartości wyróżnione (prawdziwe)
+  \item $f^\impl : U^2 \to U$ -- ,,tabelka'' implikacji
+  \item $f^\neg : U \to U$ -- ,,tabelka'' negacji
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Wartościowanie formuł w matrycy $M$]
+$f : \{x_i\}_{i\in\N} \to U$ -- wartościowane zmiennych logicznych.
+Istnieje (jedyne) rozszerzenie $f$ do $w^f : S \to U$, takie że
+\begin{itemize}
+  \item $w^f(x_i) = f(x_i)$,
+  \item $w^f(A \impl B) = f^\impl(w^f(A), w^f(B))$,
+  \item $w^f(\neg A) = f^\neg(w^f(A))$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}
+$a \in S$ jest tautologią matrycy $M$, gdy $w^f(a) \in U^*$ dla dowolnego
+wartościowania $f$.
+\end{definition}
+
+\begin{definition}
+$E(M)$ -- zbiór wszystkich tautologii matrycy $M$.
+\end{definition}
+
+\begin{definition}
+Reguła MP jest niezawodna w matrycy $M$, gdy
+$$\forall_{x,y \in U}
+  \text{ jeśli } x \in U^* \text{ i } f^\impl(x,y) \in U^*
+  \text{ to } y \in U^*.$$
+\end{definition}
+
+\header{Obserwacja.} Jeśli MP jest niezawodna w $M$,
+to $E(M)$ jest zamknięty na MP.
+
+%TODO: dygresja o matrycy Łukasiewicza, matrycy Posta, matrycach boolowskich
+
+\begin{definition}[Konsekwencja matrycowa]
+$M$ -- matryca, w której MP jest niezawodna.
+$$Cn^M(X) = \{ a \in S : \forall_f 
+  ((\forall_{x \in X} w^f(x) \in U^*) \implies w^f(a) \in U^*) \}.$$
+\end{definition}
+
+\header{Fakty o $Cn^M$}
+
+\begin{enumerate}
+  \item $Cn^M(\emptyset) = E(M)$.
+  \item $Cn^M(X)$ jest zamknięty na MP.
+  \item $X \subset Cn^M(X)$.
+  \item Jeśli $X \subset Y$, to $Cn^M(X) \subset Cn^M(Y)$.
+  \item $Cn^M(Cn^M(X)) = Cn^M(X)$.
+\end{enumerate}
+
+\noindent Od teraz: $M$ -- matryca logiki klasycznej.
+
+\begin{theorem}[O niesprzeczności]
+$Cn_L(X) \subset Cn^M(X)$.
+\end{theorem}
+
+\begin{proof}
+$L \subset E(M) = Cn^M(\emptyset) \subset Cn^M(X)$, $X \subset Cn^M(X)$
+oraz $Cn^M(X)$ jest zamknięty na MP. Z drugiej strony
+$Cn_L(X) = Cn(L \cup X)$ jest najmniejszym zbiorem spełniającym powyższe
+trzy warunki, zatem inkluzja zachodzi.
+\end{proof}
+
+\begin{theorem}[O pełności Posta]
+$Cn^M(X) \subset Cn_L(X)$.
+\end{theorem}
+
+%TODO: dowód pojawi się na kolejnym wykładzie.
 
 \end{document}
