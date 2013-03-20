@@ -210,7 +210,9 @@ Jeśli $L' = Cn(L')$ jest logiką w której zachodzi TDN to $L \subset L'$
 \end{theorem}
 
 \begin{proof}
-Dla $L'$ jeśli TDN to TDW. ($b \rightarrow a \in Cn_{L'}(X) \Rightarrow a \in Cn_{L'}(X \cup \{b\})$ tryw, dowodzimy $\Leftarrow$)
+Dla $L'$ jeśli TDN to TDW. \\
+($b \rightarrow a \in Cn_{L'}(X) \Rightarrow  a \in Cn_{L'}(X \cup \{b\})$ tryw,
+dowodzimy $\Leftarrow$)
 \begin{enumerate}
 \item $a \in Cn_{L'}(X \cup \{b\}) \subset Cn_{L'} (X \cup \{b, \neg a\})$
 \item $\neg a \in Cn_{L'} (X \cup \{b, \neg a\}) $ 
@@ -219,9 +221,12 @@ Dla $L'$ jeśli TDN to TDW. ($b \rightarrow a \in Cn_{L'}(X) \Rightarrow a \in C
 Zatem TDW, zatem K, S.\\
 Udowodnimy teraz że zachodzi również aksjomat S.\\
 \begin{enumerate}
-\item $b, \neg b \in Cn_{L'}(\{\neg a \rightarrow \neg b, \neg a \rightarrow b, \neg a\})$
-\item $(\neg a \rightarrow b) \rightarrow a \in Cn_{L'}({\neg a \rightarrow \neg b})$ (TDN na dwóch ostatnich formułach)
-\item $(\neg a \rightarrow \neg b) \rightarrow ((\neg a \rightarrow b) \rightarrow a) \in Cn_{L'}(\emptyset) = L'$ (TDW)
+\item $b, \neg b \in Cn_{L'}(\{\neg a \rightarrow \neg b, \neg a \rightarrow b, 
+\neg a\})$
+\item $(\neg a \rightarrow b) \rightarrow a \in Cn_{L'}({\neg a \rightarrow 
+\neg b})$ (TDN na dwóch ostatnich formułach)
+\item $(\neg a \rightarrow \neg b) \rightarrow 
+((\neg a \rightarrow b) \rightarrow a) \in Cn_{L'}(\emptyset) = L'$ (TDW)
 \end{enumerate}
 \end{proof}
 
@@ -242,8 +247,10 @@ Udowodnimy teraz że zachodzi również aksjomat S.\\
 
 Baza indukcji konstrukcji drzewa DTW:
 \begin{itemize}
-\item T1 jest punktem $a \in L \cup X$, robię $(K_{a, b}$ and $a) \Rightarrow b \rightarrow a$
-\item T1 jest punktem $b$, robię $((S$ and $K)$ and $K) \Rightarrow b \rightarrow b$
+\item T1 jest punktem $a \in L \cup X$, robię $(K_{a, b}$ and $a) 
+\Rightarrow b \rightarrow a$
+\item T1 jest punktem $b$, robię $((S$ and $K)$ and $K) 
+\Rightarrow b \rightarrow b$
 \end{itemize}
 
 \newpage
@@ -253,11 +260,14 @@ Baza indukcji konstrukcji drzewa DTW:
 \item $\neg \neg p \rightarrow p \in L$?\\
 $Cn_{L}(\neg \neg p, \neg p) \xRightarrow{TDN} \neg \neg p \rightarrow p$
 \item $p \rightarrow \neg \neg p \in L?$\\
-$Cn_{L}(p, \neg \neg \neg p) \Rightarrow Cn_{L}(p, \neg p) \xRightarrow{TDN} p \rightarrow \neg \neg p$
-\item $(p \rightarrow q) \rightarrow ((q \rightarrow r) \rightarrow (p \rightarrow r))$?\\
+$Cn_{L}(p, \neg \neg \neg p) \Rightarrow Cn_{L}(p, \neg p) \xRightarrow{TDN} 
+p \rightarrow \neg \neg p$
+\item $(p \rightarrow q) \rightarrow 
+((q \rightarrow r) \rightarrow (p \rightarrow r))$?\\
 $r \in Cn_{L}({p \rightarrow q, q \rightarrow r, p})$
 \item $(p \rightarrow q) \rightarrow (\neg q \rightarrow \neg p)$\\
-$Cn_{L}(\{p \rightarrow q, \neg q, \neg \neg p\}) \xRightarrow{TDN} (p \rightarrow q) \rightarrow (\neg q \rightarrow \neg p)$
+$Cn_{L}(\{p \rightarrow q, \neg q, \neg \neg p\}) \xRightarrow{TDN} 
+(p \rightarrow q) \rightarrow (\neg q \rightarrow \neg p)$
 \item $(p \rightarrow q) \rightarrow ((\neg p \rightarrow q) \rightarrow q)$\\
 $Cn_{L}(\{p \rightarrow q, \neg p \rightarrow q, \neg q\})$
 \begin{itemize}
@@ -281,7 +291,8 @@ $Cn_{L}(\{(p \rightarrow q) \rightarrow p, \neg p\})$
 
 \begin{definition}
 $X \subset S$ jest \textbf{sprzeczny} gdy $Cn_L(X) = S$.\\
-$X \subset S$ jest \textbf{pełny} gdy dla dowolnego $\alpha \in S$ zachodzi $\alpha \in Cn_L(X) \vee \neg \alpha \in Cn_L(X)$
+$X \subset S$ jest \textbf{pełny} gdy dla dowolnego $\alpha \in S$ zachodzi 
+$\alpha \in Cn_L(X) \vee \neg \alpha \in Cn_L(X)$
 \end{definition}
 
 \begin{theorem}[Adolfa Lindenbauma]
@@ -295,13 +306,17 @@ $X_{i+1} = Cn_L(X_i \cup {\alpha_i}$ gdy $Cn_L(X_i \cup {\alpha_i}) \neq S$\\
 $X_{i+1} = X_i$ wpp \\ \\
 $X_0 \subset X_1 \subset ...$ \\
 $X_i$ - niesprzeczne, zamknięte na MP.\\
-$X^{MAX} = \bigcup X_i$, $X^{MAX}$ - niesprzeczne, zamknięte na MP (z lematu 2)\\ \\
+$X^{MAX} = \bigcup X_i$, $X^{MAX}$ - niesprzeczne, zamknięte na MP (z lematu 2)
+\\ \\
 Czy $X^{MAX}$ sprzeczny? Załóżmy że tak, tzn:\\
 $\alpha, \neg \alpha \in X^{MAX}$\\
 $\alpha \in X_p, \neg \alpha \in X_q$, weźmy $r = max(p, q)$, wówczas:\\
- $\alpha, \neg \alpha \in X_r$, ale $X_r$ miało być niesprzeczne! Zatem $X_{MAX}$ niesprzeczne.\\ \\
+ $\alpha, \neg \alpha \in X_r$, ale $X_r$ miało być niesprzeczne! 
+ Zatem $X_{MAX}$ niesprzeczne.\\ \\
 Jeśli $X$ sprzeczne to $X$ pełne:\\
-$\alpha, \neg \alpha \in Cn_L(X)$ to $\alpha \rightarrow (\neg \alpha \rightarrow \beta) \in L$, z MP $\beta \in Cn_L(X)$, $\beta$ dowolne. 
+$\alpha, \neg \alpha \in Cn_L(X)$ to 
+$\alpha \rightarrow (\neg \alpha \rightarrow \beta) \in L$, 
+z MP $\beta \in Cn_L(X)$, $\beta$ dowolne. 
 \\ \\
 Czy $X^{MAX}$ zupełny?\\
 Załóżmy że tak nie jest, tzn:\\
@@ -311,11 +326,17 @@ Ale $\alpha \in S$, więc $\alpha = \alpha_p, \neg \alpha = \alpha_q$\\
 Bez straty ogólności $p < q$, więc $X_p \subset X_q$
 
 \begin{itemize}
-\item $Cn_L(X_q \cup {\alpha}) = S$, $\beta \in Cn_L(X_q \cup {\alpha}) \xRightarrow{TDW} (\alpha \rightarrow \beta) \in X_q$
-\item $Cn_L(X_q \cup {\neg \alpha}) = S$, $\beta \in Cn_L(X_q \cup {\neg \alpha}) \xRightarrow{TDW} (\neg 	\alpha \rightarrow \beta) \in X_q$
-\item $(\alpha \rightarrow \beta) \rightarrow (\neg \alpha \rightarrow \beta) \rightarrow \beta \in L$
+\item $Cn_L(X_q \cup {\alpha}) = S$, $\beta \in Cn_L(X_q \cup {\alpha}) 
+\xRightarrow{TDW} (\alpha \rightarrow \beta) \in X_q$
+\item $Cn_L(X_q \cup {\neg \alpha}) = S$, 
+$\beta \in Cn_L(X_q \cup {\neg \alpha}) \xRightarrow{TDW} 
+(\neg \alpha \rightarrow \beta) \in X_q$
+\item $(\alpha \rightarrow \beta) \rightarrow (\neg \alpha \rightarrow \beta) 
+\rightarrow \beta \in L$
 \end{itemize}
-z powyższych trzech wynika że $\beta \in X_q$, $\beta$ dowolne więc $X_q$ sprzeczne, a miało nie być. Zatem sprzeczność i $X^{MAX}$ jest zupełny.
+z powyższych trzech wynika że $\beta \in X_q$, 
+$\beta$ dowolne więc $X_q$ sprzeczne, a miało nie być. 
+Zatem sprzeczność i $X^{MAX}$ jest zupełny.
 
 \end{proof}
 
