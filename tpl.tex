@@ -9,6 +9,9 @@
 \usepackage{amsthm}
 
 \usepackage{graphicx}
+\usepackage{sidecap}
+
+\usepackage{mathtools}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Twierdzenie}
@@ -147,7 +150,7 @@ $\subset$ -- przez sklejenie dowodów Hilberta.
 Niech $L \subset S$ będzie najmniejszym zbiorem zawierającym (dla dowolnych
 $A, B, C \in S$)
 \begin{itemize}
-  \item $K: A \impl (A \impl B)$
+  \item $K: A \impl (B \impl A)$
   \item $S: (A \impl (B \impl C)) \impl ((A \impl B) \impl (A \impl C))$
   \item $N: (\neg A \impl \neg B) \impl ((\neg A \impl B) \impl A)$
 \end{itemize}
@@ -200,6 +203,120 @@ to $K, S \in L'$.
 
 \begin{proof}
 %TODO: napisać dowód.
+\end{proof}
+
+\begin{theorem}
+Jeśli $L' = Cn(L')$ jest logiką w której zachodzi TDN to $L \subset L'$
+\end{theorem}
+
+\begin{proof}
+Dla $L'$ jeśli TDN to TDW. ($b \rightarrow a \in Cn_{L'}(X) \Rightarrow a \in Cn_{L'}(X \cup \{b\})$ tryw, dowodzimy $\Leftarrow$)
+\begin{enumerate}
+\item $a \in Cn_{L'}(X \cup \{b\}) \subset Cn_{L'} (X \cup \{b, \neg a\})$
+\item $\neg a \in Cn_{L'} (X \cup \{b, \neg a\}) $ 
+\item $b \rightarrow a \in Cn_{L'}(X)$ (Sprzeczność, TDN)
+\end{enumerate}
+Zatem TDW, zatem K, S.\\
+Udowodnimy teraz że zachodzi również aksjomat S.\\
+\begin{enumerate}
+\item $b, \neg b \in Cn_{L'}(\{\neg a \rightarrow \neg b, \neg a \rightarrow b, \neg a\})$
+\item $(\neg a \rightarrow b) \rightarrow a \in Cn_{L'}({\neg a \rightarrow \neg b})$ (TDN na dwóch ostatnich formułach)
+\item $(\neg a \rightarrow \neg b) \rightarrow ((\neg a \rightarrow b) \rightarrow a) \in Cn_{L'}(\emptyset) = L'$ (TDW)
+\end{enumerate}
+\end{proof}
+
+\bigskip
+
+\header{Konstrukcje drzewowe dowodów}
+\begin{figure}
+\caption{Drzewo MP}
+\centering \includegraphics[width=0.3\textwidth]{drzewoMP}
+\caption{Drzewo TDW}
+\centering \includegraphics[width=0.4\textwidth]{drzewoTDW}
+\caption{Indukcyjna konstrukcja drzewa TDW}
+\centering \includegraphics[width=0.25\textwidth]{drzewoMP2}
+\centering \includegraphics[width=0.5\textwidth]{drzewoTDWindukcyjnie}
+\caption{Indukcyjna konstrukcja drzewa TDN}
+\centering \includegraphics[width=0.7\textwidth]{drzewoTDN}
+\end{figure}
+
+Baza indukcji konstrukcji drzewa DTW:
+\begin{itemize}
+\item T1 jest punktem $a \in L \cup X$, robię $(K_{a, b}$ and $a) \Rightarrow b \rightarrow a$
+\item T1 jest punktem $b$, robię $((S$ and $K)$ and $K) \Rightarrow b \rightarrow b$
+\end{itemize}
+
+\newpage
+
+\header{Ćwiczenia}
+\begin{enumerate}
+\item $\neg \neg p \rightarrow p \in L$?\\
+$Cn_{L}(\neg \neg p, \neg p) \xRightarrow{TDN} \neg \neg p \rightarrow p$
+\item $p \rightarrow \neg \neg p \in L?$\\
+$Cn_{L}(p, \neg \neg \neg p) \Rightarrow Cn_{L}(p, \neg p) \xRightarrow{TDN} p \rightarrow \neg \neg p$
+\item $(p \rightarrow q) \rightarrow ((q \rightarrow r) \rightarrow (p \rightarrow r))$?\\
+$r \in Cn_{L}({p \rightarrow q, q \rightarrow r, p})$
+\item $(p \rightarrow q) \rightarrow (\neg q \rightarrow \neg p)$\\
+$Cn_{L}(\{p \rightarrow q, \neg q, \neg \neg p\}) \xRightarrow{TDN} (p \rightarrow q) \rightarrow (\neg q \rightarrow \neg p)$
+\item $(p \rightarrow q) \rightarrow ((\neg p \rightarrow q) \rightarrow q)$\\
+$Cn_{L}(\{p \rightarrow q, \neg p \rightarrow q, \neg q\})$
+\begin{itemize}
+\item $\neg q$
+\item $p \rightarrow q \Rightarrow \neg q \rightarrow \neg p$ (z 4)
+\item $\neg p$ (z MP)
+\item $\neg p \rightarrow q$
+\item $q$ (Sprzeczność)
+\end{itemize}
+\item Prawo Pierce'a: $((p \rightarrow q) \rightarrow p) \rightarrow p$\\
+$Cn_{L}(\{(p \rightarrow q) \rightarrow p, \neg p\})$
+\begin{itemize}
+\item $\neg p \rightarrow \neg (p \rightarrow q)$ (z kontrapozycji)
+\item $\neg p$
+\item $\neg (p \rightarrow q)$ (z MP)
+\item $\neg (p \rightarrow q) \rightarrow p$
+\item $\neg p \rightarrow (p \rightarrow q)$ (z kontrapozycji)
+\item $p \rightarrow q$ (z MP, Sprzeczność)
+\end{itemize}
+\end{enumerate}
+
+\begin{definition}
+$X \subset S$ jest \textbf{sprzeczny} gdy $Cn_L(X) = S$.\\
+$X \subset S$ jest \textbf{pełny} gdy dla dowolnego $\alpha \in S$ zachodzi $\alpha \in Cn_L(X) \vee \neg \alpha \in Cn_L(X)$
+\end{definition}
+
+\begin{theorem}[Adolfa Lindenbauma]
+Zbiór niesprzeczny da się uzupełnić do niesprzecznego i zupełnego.
+\end{theorem}
+\begin{proof}
+$X$ - niesprzeczny, $S$ - jest przeliczalny, $S = {\alpha_0, \alpha_1, ...}$.\\
+Zdefiniujmy ciąg zbiorów:\\
+$X_0 = Cn_L(X) \neq S$\\
+$X_{i+1} = Cn_L(X_i \cup {\alpha_i}$ gdy $Cn_L(X_i \cup {\alpha_i}) \neq S$\\
+$X_{i+1} = X_i$ wpp \\ \\
+$X_0 \subset X_1 \subset ...$ \\
+$X_i$ - niesprzeczne, zamknięte na MP.\\
+$X^{MAX} = \bigcup X_i$, $X^{MAX}$ - niesprzeczne, zamknięte na MP (z lematu 2)\\ \\
+Czy $X^{MAX}$ sprzeczny? Załóżmy że tak, tzn:\\
+$\alpha, \neg \alpha \in X^{MAX}$\\
+$\alpha \in X_p, \neg \alpha \in X_q$, weźmy $r = max(p, q)$, wówczas:\\
+ $\alpha, \neg \alpha \in X_r$, ale $X_r$ miało być niesprzeczne! Zatem $X_{MAX}$ niesprzeczne.\\ \\
+Jeśli $X$ sprzeczne to $X$ pełne:\\
+$\alpha, \neg \alpha \in Cn_L(X)$ to $\alpha \rightarrow (\neg \alpha \rightarrow \beta) \in L$, z MP $\beta \in Cn_L(X)$, $\beta$ dowolne. 
+\\ \\
+Czy $X^{MAX}$ zupełny?\\
+Załóżmy że tak nie jest, tzn:\\
+$\alpha \not \in X^{MAX}, \neg \alpha \not \in X^{MAX}$\\
+Czyli $\forall_p \alpha \not \in X_p \wedge \neg \alpha \not \in X_p$\\
+Ale $\alpha \in S$, więc $\alpha = \alpha_p, \neg \alpha = \alpha_q$\\
+Bez straty ogólności $p < q$, więc $X_p \subset X_q$
+
+\begin{itemize}
+\item $Cn_L(X_q \cup {\alpha}) = S$, $\beta \in Cn_L(X_q \cup {\alpha}) \xRightarrow{TDW} (\alpha \rightarrow \beta) \in X_q$
+\item $Cn_L(X_q \cup {\neg \alpha}) = S$, $\beta \in Cn_L(X_q \cup {\neg \alpha}) \xRightarrow{TDW} (\neg 	\alpha \rightarrow \beta) \in X_q$
+\item $(\alpha \rightarrow \beta) \rightarrow (\neg \alpha \rightarrow \beta) \rightarrow \beta \in L$
+\end{itemize}
+z powyższych trzech wynika że $\beta \in X_q$, $\beta$ dowolne więc $X_q$ sprzeczne, a miało nie być. Zatem sprzeczność i $X^{MAX}$ jest zupełny.
+
 \end{proof}
 
 \end{document}
