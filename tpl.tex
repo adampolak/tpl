@@ -16,6 +16,7 @@
 \theoremstyle{definition}
 \newtheorem*{definition}{Definicja}
 \newtheorem*{example}{Przykład}
+\newtheorem*{remark}{Uwaga}
 
 \newcommand{\impl}{\rightarrow}
 \newcommand{\N}{\mathbb{N}}
@@ -178,7 +179,7 @@ $\Leftarrow$ -- trywialny. $\Rightarrow$ -- przez indukcję ze względu
 na długość dowodu $b$.  %TODO: napisać tę drugą część.
 \end{proof}
 
-\begin{theorem}[O dedukcji nie wprost, TDN]
+\begin{theorem}[O dedukcji niewprost, TDN]
 Jeśli $z, \neg z \in Cn_L(X \cup \{a, \neg b\})$, to $a \impl b \in Cn_L(X)$.
 \end{theorem}
 
@@ -199,7 +200,32 @@ to $K, S \in L'$.
 \end{theorem}
 
 \begin{proof}
-%TODO: napisać dowód.
+ ~\begin{itemize}
+    \item $K \in L'$:
+      \begin{flalign*}
+        a &\in Cu_{L'}(\{a,b\}) = Cu_{L'}(\{a\} \cup \{b\}) &&
+        \text{oczywiste} \\
+        b \impl a &\in Cu_{L'}(\{a\}) && \text{z TDW} \\
+        a \impl (b \impl a) &\in Cu_{L'}(\emptyset) = L' && \text{z TDW}
+      \end{flalign*}
+    \item $S \in L'$:
+      \begin{flalign*}
+        a &\in Cu_{L'}(\{a\impl (b\impl c), a \impl b, a\}) &&
+        \\text{oczywiste} \\
+        b &\in Cu_{L'}(\{a\impl (b\impl c), a \impl b, a\}) &&
+        \text{MP na }a\impl b\text{ i }a \\
+        b \impl c &\in Cu_{L'}(\{a\impl (b\impl c), a \impl b, a\}) &&
+        \text{MP na }a\impl (b \impl c)\text{ i }a \\
+        c &\in Cu_{L'}(\{a\impl (b\impl c), a \impl b, a\}) &&
+        \text{MP na }b \impl c\text{ i }b \\
+        (a \impl c) &\in Cu_{L'}(\{a\impl (b\impl c), a \impl b\}) &&
+        \text{z TDW} \\
+        (a\impl b) \impl (a \impl c) &\in Cu_{L'}(\{a\impl (b\impl c)\}) &&
+        \text{z TDW} \\
+        (a\impl (b\impl c)) \impl ((a\impl b) \impl (a \impl c)) &\in
+        Cu_{L'}(\emptyset) = L' && \text{z TDW} 
+      \end{flalign*}
+  \end{itemize}
 \end{proof}
 
 \begin{theorem}
@@ -208,17 +234,49 @@ to $K, S, N \in L'$.
 \end{theorem}
 
 \begin{proof}
-%TODO: napisać dowód.
+  ~\begin{itemize}
+    \item W~$L'$ zachodzi TDW:
+      \begin{itemize}
+        \item Jeśli $b\impl a \in Cu_{L'}(X)$ to $a\in Cu_{L'}(X\cup\{b\})$
+          zachodzi w~każdym zbiorze zamkniętym na MP.
+        \item Jeśli $a\in Cu_{L'}(X\cup\{b\})$ to $b\impl a \in Cu_{L'}(X)$  
+          zachodzi, bo:
+          \begin{flalign*}
+            a &\in Cu_{L'}(X\cup\{b\}) \subset Cu_{L'}(X\cup\{b,\neg a\})
+            && \text{z założenia} \\
+            \neg a &\in Cu_{L'}(X\cup\{b,\neg a\}) && \text{oczywiste} \\
+            b \impl a &\in Cu_{L'}(X) && \text{z TDN}
+          \end{flalign*}
+      \end{itemize}
+    \item $N \in L'$:
+      \begin{flalign*}
+        \neg b, b &\in Cu_{L'}(\{\neg a \impl \neg b,\neg a \impl b, \neg a\})
+        && \text{dwa razy MP} \\
+        (\neg a \impl b) \impl a &\in Cu_{L'}(\{\neg a \impl \neg b\})
+        && \text{z TDN} \\
+        (\neg a \impl \neg b) \impl ((\neg a \impl b) \impl a)
+        &\in Cu_{L'}(\emptyset) && \text{z TDW}
+      \end{flalign*}
+  \end{itemize}
 \end{proof}
 
 %TODO: dygresja: TDW i TDN jako transformacje drzew dowodowych.
 
 \begin{theorem}[Prawo Pierce'a]
-$(p \impl q) \impl ((\neg p \impl q) \impl q) \in L.$
+  $((p\impl q) \impl p) \impl p \in L.$
 \end{theorem}
+\begin{remark}
+  Pomimo że prawo Pierce'a da się wyrazić bez użycia negacji,
+  \emph{nie należy ono} do logiki intuicjonistycznej (tzn.
+  nie da się go wyprowadzić używając jedynie $K$ i~$S$).
+\end{remark}
 
+%$(p \impl q) \impl ((\neg p \impl q) \impl q) \in L.$
 %TODO: Na wykładzie wydawało mi się, że to właśnie jest prawo Pierce'a
 %      ale internet twierdzi co innego.
+%sapal: W moich notatkach jest, że prawo Pierce'a jest takie, jak napisałem
+%       (a internet się z tym zgadza). Nie wiem, jak te dwie rzeczy mają się
+%       do siebie (mogą być równoważne).
 
 \begin{definition}
 Zbiór $X \subset S$ jest sprzeczny, gdy $Cn_L(X) = S$.
