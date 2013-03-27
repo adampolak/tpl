@@ -9,6 +9,7 @@
 \usepackage{amsthm}
 
 \usepackage{graphicx}
+\usepackage{sidecap}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Twierdzenie}
@@ -148,7 +149,7 @@ $\subset$ -- przez sklejenie dowodów Hilberta.
 Niech $L \subset S$ będzie najmniejszym zbiorem zawierającym (dla dowolnych
 $A, B, C \in S$)
 \begin{itemize}
-  \item $K: A \impl (A \impl B)$
+  \item $K: A \impl (B \impl A)$
   \item $S: (A \impl (B \impl C)) \impl ((A \impl B) \impl (A \impl C))$
   \item $N: (\neg A \impl \neg B) \impl ((\neg A \impl B) \impl A)$
 \end{itemize}
@@ -258,15 +259,80 @@ to $K, S, N \in L'$.
   \end{itemize}
 \end{proof}
 
-%TODO: dygresja: TDW i TDN jako transformacje drzew dowodowych.
+\header{Konstrukcje drzewowe dowodów}
 
-\begin{theorem}[Prawo wyłączonego środka]
-$(p \impl q) \impl ((\neg p \impl q) \impl q) \in L.$
-\end{theorem}
+\begin{figure}[h]
+\caption{Drzewo Modus Ponens}
+\centering \includegraphics[width=0.3\textwidth]{img/drzewoMP}
+\end{figure}
 
-\begin{theorem}[Prawo Pierce'a]
-  $((p\impl q) \impl p) \impl p \in L.$
-\end{theorem}
+\begin{figure}[h]
+\caption{TDW jako transformacja drzewa dowodu}
+\centering \includegraphics[width=0.4\textwidth]{img/drzewoTDW}
+\end{figure}
+
+Baza indukcji konstrukcji drzewa TDW:
+\begin{itemize}
+\item T1 jest punktem $a \in L \cup X$, robię $(K_{a, b}$ and $a) 
+\Rightarrow b \rightarrow a$
+\item T1 jest punktem $b$, robię $((S$ and $K)$ and $K) 
+\Rightarrow b \rightarrow b$
+\end{itemize}
+
+\begin{figure}[h]
+\caption{Indukcyjna konstrukcja drzewa TDW}
+\centering \includegraphics[width=0.25\textwidth]{img/drzewoMP2}
+\centering \includegraphics[width=0.5\textwidth]{img/drzewoTDWindukcyjnie}
+%\end{figure}
+
+%\begin{figure}[h]
+\caption{Indukcyjna konstrukcja drzewa TDN}
+\centering \includegraphics[width=0.7\textwidth]{img/drzewoTDN}
+\end{figure}
+
+
+\header{Ćwiczenia}
+
+\begin{enumerate}
+  \item $\neg \neg p \impl p \in L$.
+      \quad Dowód: TDN dla $Cn_{L}(\{\neg \neg p, \neg p\})$.
+  \item $p \impl \neg \neg p \in L$.
+      \quad Dowód: 1. i TDN dla $Cn_{L}(\{p, \neg \neg \neg p\})$.
+  \item $(p \impl q) \impl ((q \impl r) 
+      \impl (p \impl r)) \in L$.
+      \quad Dowód: TDW dla $Cn_{L}(\{p \impl q, q \impl r, p\})$.
+  \item $(p \impl q) \impl (\neg q \impl \neg p) \in L$.
+      \quad Dowód: TDN dla $Cn_{L}(\{p \impl q, \neg q, \neg \neg p\})$.
+  \item Prawo wyłączonego środka:
+      $(p \impl q) \impl ((\neg p \impl q) \impl q) \in L$.
+    \begin{proof}
+      \begin{flalign*}
+        \neg q &\in Cn_{L}(\{p \impl q, \neg p \impl q, \neg q\}) &&\\
+        \neg q \impl \neg p &\in Cn_{L}(\{p \impl q, \neg p \impl q, \neg q\})
+            && \text{ćw. 4} \\
+        \neg p &\in Cn_{L}(\{p \impl q, \neg p \impl q, \neg q\})
+            && \text{MP} \\
+        q &\in Cn_{L}(\{p \impl q, \neg p \impl q, \neg q\}) && \text{MP} \\
+        (\neg p \impl q) \impl q &\in Cn_{L}(\{p \impl q\}) && \text{TDN} \\
+        (p \impl q) \impl ((\neg p \impl q) \impl q) &\in Cn_{L}(\emptyset) = L
+            && \text{TDW}
+      \end{flalign*}
+    \end{proof}
+  \item Prawo Pierce'a: $((p \impl q) \impl p) \impl p \in L$.
+    \begin{proof}
+    %TODO: przepisać ten dowód analogicznie do poprzedniego
+    $Cn_{L}(\{(p \rightarrow q) \rightarrow p, \neg p\})$
+    \begin{itemize}
+      \item $\neg p \rightarrow \neg (p \rightarrow q)$ (z kontrapozycji)
+      \item $\neg p$
+      \item $\neg (p \rightarrow q)$ (z MP)
+      \item $\neg (p \rightarrow q) \rightarrow p$
+      \item $\neg p \rightarrow (p \rightarrow q)$ (z kontrapozycji)
+      \item $p \rightarrow q$ (z MP, Sprzeczność)
+    \end{itemize}
+    \end{proof}
+\end{enumerate}
+
 \begin{remark}
   Pomimo że prawo Pierce'a da się wyrazić bez użycia negacji,
   \emph{nie należy ono} do logiki intuicjonistycznej (tzn.
