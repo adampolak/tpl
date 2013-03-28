@@ -283,9 +283,7 @@ Baza indukcji konstrukcji drzewa TDW:
 \caption{Indukcyjna konstrukcja drzewa TDW}
 \centering \includegraphics[width=0.25\textwidth]{img/drzewoMP2}
 \centering \includegraphics[width=0.5\textwidth]{img/drzewoTDWindukcyjnie}
-%\end{figure}
 
-%\begin{figure}[h]
 \caption{Indukcyjna konstrukcja drzewa TDN}
 \centering \includegraphics[width=0.7\textwidth]{img/drzewoTDN}
 \end{figure}
@@ -320,16 +318,15 @@ Baza indukcji konstrukcji drzewa TDW:
     \end{proof}
   \item Prawo Pierce'a: $((p \impl q) \impl p) \impl p \in L$.
     \begin{proof}
-    %TODO: przepisać ten dowód analogicznie do poprzedniego
-    $Cn_{L}(\{(p \rightarrow q) \rightarrow p, \neg p\})$
-    \begin{itemize}
-      \item $\neg p \rightarrow \neg (p \rightarrow q)$ (z kontrapozycji)
-      \item $\neg p$
-      \item $\neg (p \rightarrow q)$ (z MP)
-      \item $\neg (p \rightarrow q) \rightarrow p$
-      \item $\neg p \rightarrow (p \rightarrow q)$ (z kontrapozycji)
-      \item $p \rightarrow q$ (z MP, Sprzeczność)
-    \end{itemize}
+      \begin{flalign*}
+        \neg p \impl (\neg q \impl \neg p) 
+            &\in Cn_L(\{(p \impl q) \impl p, \neg p\}) && \text{aksjomat } S\\
+        \neg q \impl \neg p &\in Cn_{L}(\cdots) && \text{MP}\\
+        p \impl q &\in Cn_{L}(\cdots) && \text{ćw. 4}\\
+        p &\in Cn_{L}(\cdots) && \text{MP}\\
+        \neg p &\in Cn_{L}(\cdots) && \\
+        ((p \impl q) \impl p) \impl p &\in Cn_{L}(\emptyset) = L && \text{TDN}
+      \end{flalign*}
     \end{proof}
 \end{enumerate}
 
