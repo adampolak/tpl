@@ -522,10 +522,243 @@ $Cn_L(X) = Cn(L \cup X)$ jest najmniejszym zbiorem spełniającym powyższe
 trzy warunki, zatem inkluzja zachodzi.
 \end{proof}
 
+\begin{lemma}
+$((a \impl b) \impl c) \impl (a \impl c) \impl c \in L$
+\end{lemma}
+
+\begin{proof}
+  \begin{flalign*}
+    \neg c \impl \neg a
+        &\in Cn_L(\{(a \impl b) \impl c, a \impl c, \neg c\}) && \text{transpozycja} \\
+    \neg a
+		    &\in Cn_L(\{(a \impl b) \impl c, a \impl c, \neg c\}) && \text{MP} \\
+    \neg c \impl \neg (a \impl b)
+		    &\in Cn_L(\{(a \impl b) \impl c, a \impl c, \neg c\}) && \text{transpozycja} \\
+    \neg (a \impl b)
+		    &\in Cn_L(\{(a \impl b) \impl c, a \impl c, \neg c\}) && \text{MP} \\
+    \neg (a \impl b) \impl a
+		    &\in L \\
+    a
+		    &\in Cn_L(\{(a \impl b) \impl c, a \impl c, \neg c\}) && \text{MP} \\
+		(a \impl c) \impl a
+		    &\in Cn_L(\{(a \impl b) \impl c\}) && \text{z TDN} \\
+		((a \impl b) \impl c) \impl (a \impl c) \impl a
+		    &\in L && \text{z TDW} \\
+  \end{flalign*}
+\end{proof}
+
 \begin{theorem}[O pełności Posta]
-$Cn^M(X) \subset Cn_L(X)$.
+$Cn^M(X) \subset Cn_L(X)$
 \end{theorem}
 
-%TODO: dowód pojawi się na kolejnym wykładzie.
+\begin{proof}[Dowód nie wprost]
+Hipoteza: Istnieje $a \in Cn^M(X)$ i $a \not\in Cn_L(X)$.
+
+Z twierdzenia Lindenbauma mamy, że istnieje $Y \subset S$, takie że:
+\begin{enumerate}
+  \item $Cn_L(X) \subset Y$, $a \not\in Y$.
+  \item $Y$ jest niesprzeczny.
+  \item $Cn_L(Y) = Y$.
+  \item Jeśli $b \not\in Y$, to $a \in Cn_L(Y \cup \{b\})$
+\end{enumerate}
+
+Stwórzmy sobie wartościowanie
+$f(x_i) = 
+	\begin{cases} 
+		1 & \mbox{gdy } x_i \in Y \\
+		0 & \mbox{gdy } x_i \not\in Y
+	\end{cases}
+$
+
+Pokażmy, że $w^f(A) = 1$ wtedy i tylko wtedy,
+gdy $A \in Y$ za pomocą indukcji strukturalnej.
+Baza wprost z definicji $f$.
+Krok:
+\begin{itemize}
+\item negacja $w^f(\neg A) = 1$ wtedy i tylko wtedy, gdy $\neg A \in Y$
+	\begin{description}
+		\item[$\Rightarrow$] Hp. $\neg A \not\in Y$
+			\begin{flalign*}
+				a &\in Cn_L(Y \cup \{\neg A\}) && \text{4. własność } Y\\
+				\neg A \impl a &\in Cn_L(Y) = Y && \text{z TDW}
+			\end{flalign*}
+			$w^f(A) = 0$, więc $A \not\in Y$,
+			w takim razie analogicznie $A \impl a \in Y$.
+			$$(A \impl a) \impl((\neg A \impl a) \impl a) \in L \subset Y$$
+			$a \in Y$ sprzeczność.
+		\item[$\Leftarrow$] Wystarczy pokazać, że $w^f(A) = 0$.
+		
+			Hp. $w^f(A) = 1$, wtedy $A \in Y$ (z założenia indukcyjnego),
+			ale $\neg A \in Y$, sprzeczność.
+	\end{description}
+\item implikacja $w^f(C \impl D) = 1$ wtedy i tylko wtedy, gdy $C \impl D \in Y$
+	\begin{description}
+		\item[$\Leftarrow$] Hp. $w^f(C \impl D) = 0$
+			$$w^f(C) = 1 \text{ i } w^f(D) = 0$$
+			$$C \in Y \text{ i } D \not\in Y$$
+			Ale z założenia $C \impl D \in Y$, więc $D \in Y$ sprzeczność.
+		\item[$\Rightarrow$] $$w^f(C) = 0 \text { lub } w^f(D) = 1$$
+			\begin{description}
+				\item[$w^f(C) = 0$] Hp. $C \impl D \not\in Y$
+					$$C \not\in Y \text{, więc (z 4. własności $Y$ i TDW) }
+					C \impl a \in Y$$
+					$$C \impl D \not\in Y \text{, więc analogicznie }
+					(C \impl D) \impl a \in Y$$
+					$$((C \impl D) \impl a) \impl (C \impl a) \impl a \in L \subset Y$$
+					$a \in Y$ sprzeczność.
+				\item[$w^f(D) = 1$]
+					$$D \in Y$$
+					$$D \impl (C \impl D) \in L \subset Y$$
+					$$C \impl D \in Y$$	
+			\end{description}
+	\end{description}
+\end{itemize}
+$w^f(a) = 0$ (z definicji f i Y).
+Pokażmy, że $w^f(a) = 1$ dochodząc do sprzeczności.
+$$a \in Cn^M(X) \text{, więc dla każdego $g$: }
+(\overrightarrow{w^g}(X) \subset \{1\}) \Rightarrow w^g(a) = 1$$
+$$X \subset Cn_L(X) \subset Y$$
+$$\overrightarrow{w^f}(X) \subset \{1\}$$
+$$w^f(a) = 1$$
+Sprzeczność.
+\end{proof}
+
+Notacja: 
+Jeśli $f$ to wartościowanie, $A$ to formuła, to:
+$$A^f =
+	\begin{cases}
+		A & \mbox{gdy } w^f(A) = 1 \\
+		\neg A & \mbox{gdy } w^f(A) = 0 
+	\end{cases}
+$$
+
+\begin{theorem}[Kalmara]
+$A^f \in Cn_L(\{x_1^f, \dots, x_n^f\})$,
+gdzie $x_1, \dots, x_n$ to zmienne formuły $A$.
+\end{theorem}
+
+\begin{proof}[Dowód indukcyjny na strukturze]
+Baza trywialna.
+Krok:
+\begin{itemize}
+\item negacja $(\neg A)^f \in Cn_L(\{x_1^f, \dots, x_n^f\})$
+
+	Zauważmy, że $(\neg A)^f$ znaczy to samo co $A^f$ lub $\neg\neg(A^f)$,
+	a $A \leftrightarrow \neg\neg A \in L$
+\item implikacja
+	$(C \impl D)^f \in Cn_L(\{x_1^f, \dots, x_n^f, y_1^f, \dots, y_m^f\})$,
+	gdzie $x_1, \dots, x_n$ to zmienne formuły $C$,
+	a $\{y_1, \dots, y_m\}$ to zmienne formuły $D$.
+	Rozpatrzmy dwa przypadki:
+	\begin{description}
+		\item[$w^f(C\impl D) = 0$]
+			$$w^f(C) = 1\text{ i }w^f(D) = 0$$
+			$$C^f = C\text{ i }D^f = \neg D\text{ i }(C \impl D)^f = \neg(C \impl D)$$
+			$$C \impl \neg D \impl \neg(C \impl D) \in L$$
+		\item[$w^f(C\impl D) = 1$]
+			$$w^f(C) = 0 \text { lub } w^f(D) = 1$$
+			\begin{description}
+				\item[$w^f(C) = 0$]
+					$$C^f = \neg C\text{ i }(C \impl D)^f = C \impl D$$
+					$$(\neg C) \impl (C \impl D) \in L$$
+				\item[$w^f(D) = 1$]
+					$$D^f = D\text{ i }(C \impl D)^f = C \impl D$$
+					$$D \impl (C \impl D) \in L$$
+			\end{description}
+	\end{description}
+\end{itemize}
+\end{proof}
+
+\begin{theorem}[O pełności Posta - wersja prostsza]
+$Cn^M(\emptyset) = E(M) \subset L = Cn_L(\emptyset)$
+\end{theorem}
+
+\begin{proof}
+Niech $A \in E(M)$, wtedy $A^f = A$ dla dowolnego $f$, więc
+$$A \in Cn_L(\{x_1^f, \dots, x_n^f\})$$
+Stwórzmy sobie $f'$, takie że $f'(x_1) = \neg f(x_1)$,
+a dla pozostałych zmiennych $f'(x_i) = f(x_i)$
+Wtedy:
+$$A \in Cn_L(\{x_1, x_2^f\dots, x_n^f\})\text{ i }
+A \in Cn_L(\{\neg x_1, x_2^f\dots, x_n^f\})$$
+$$(x_1 \impl A) \in Cn_L(\{x_2^f\dots, x_n^f\})\text{ i }
+(\neg x_1 \impl A) \in Cn_L(\{x_2^f\dots, x_n^f\})$$
+W takim razie:
+$$A \in Cn_L(\{x_2^f\dots, x_n^f\})$$
+Możemy w ten sposób zejść do zbioru pustego.
+
+\end{proof}
+
+\begin{definition}
+$X \subset S$ jest spełnialny, gdy istnieje $f$: $w^f(X) \subset {1}$
+\end{definition}
+
+\begin{lemma}
+Jeśli $A \in Cn^M(X)$, to $A \in Cn_M(X_0)$
+dla pewnego skończonego $X_0 \subset X$.
+\end{lemma}
+
+\begin{proof}
+$$A \in Cn^M(X) \Rightarrow A \in Cn_L(X)
+\Rightarrow A \in Cn_L(X_0) \Rightarrow A \in Cn^M(X_0)$$
+\end{proof}
+
+\begin{lemma}
+$\neg A \in Cn^M(X)$ wtedy i tylko wtedy, gdy $X \cup \{A\}$ jest niespełnialny.
+\end{lemma}
+
+\begin{proof}
+	~\begin{description}
+		\item[$\Rightarrow$] z definicji $Cn^M$
+		\item[$\Leftarrow$] Niech $f$ będzie takie, że $w^f(X) \subset{1}$.
+		Pokażmy, że $w^f(\neg A) = 1$
+		Gdyby $w^f(A) = 1$, to $X \cup \{A\}$ byłoby spełnialne.
+	\end{description}
+\end{proof}
+
+\begin{theorem}[O zwartości]
+$X$ jest spełnialny wtedy i tylko wtedy,
+gdy każdy skończony $X_0 \subset X$ jest spełnialny.
+\end{theorem}
+
+\begin{proof}
+	~\begin{description}
+		\item[$\Rightarrow$] trywialnie.
+		\item[$\Leftarrow$] Udowodnimy kontrapozycję: Gdy $X$ jest niespełnialny,
+		to istnieje skończony, niespełnialny $X_0 \subset X$.
+		Wyjmijmy dowolną formułę z $X = X' \cup {A}$
+		i zastosujmy 2 poprzednie lematy:
+		$$\neg A \in Cn^M(X')$$
+		$$\neg A \in Cn^M(X'_0)$$
+		Więc $X'_0 \cup \{A\}$ jest niespełnialny.
+	\end{description}
+\end{proof}
+
+\header{Problem matchingu} Mamy dane $R \subset A \times B$,
+dla przeliczalnych $A$ i $B$, takie że dla każdego $a \in A$ istnieje
+$b \in B$, że $(a, b) \in R$ i takich $b$ jest skończenie wiele.
+
+\begin{theorem}[O matchingu]
+Jeżeli istnieje iniekcja $f: A_0 \to B$ zgodna z $R$ $((a, f(a)) \in R)$
+dla każdego skończonego $A_0 \subset A$ to istnieje globalna iniekcja.
+\end{theorem}
+
+\begin{proof}
+Stwórzmy zmienną $P_{ab}$ dla każdego $a \in A$ i $b \in B$.
+Stwórzmy formuły:
+\begin{enumerate}
+	\item $P_{ab_1} \vee \dots \vee P_{ab_k}$
+		dla każdego $a$ i wszystkich sparowanych z nim $b$
+	\item $\neg P_{ab_i} \vee \neg P_{ab_j}$
+		dla każdego $a$ i wszystkich sparowanych z nim $b_i, b_j$
+	\item $\neg P_{a_ib} \vee \neg P_{a_jb}$
+		dla każdego $b$ i wszystkich sparowanych z nim $a_i, a_j$
+\end{enumerate}
+
+% TODO - koniec dowodu
+\textit{TODO - koniec dowodu}
+
+\end{proof}
 
 \end{document}
+
