@@ -734,31 +734,136 @@ gdy każdy skończony $X_0 \subset X$ jest spełnialny.
 	\end{description}
 \end{proof}
 
-\header{Problem matchingu} Mamy dane $R \subset A \times B$,
-dla przeliczalnych $A$ i $B$, takie że dla każdego $a \in A$ istnieje
-$b \in B$, że $(a, b) \in R$ i takich $b$ jest skończenie wiele.
+\header{Przykłady zastosowań twierdzenia o zwartości:}
 
 \begin{theorem}[O matchingu]
-Jeżeli istnieje iniekcja $f: A_0 \to B$ zgodna z $R$ $((a, f(a)) \in R)$
-dla każdego skończonego $A_0 \subset A$ to istnieje globalna iniekcja.
+Mamy daną relację $R \subset A \times B$ (dla przeliczalnych $A, B$), taką że
+dla każdego $a \in A$ istnieje $b \in B$, takie że $(a, b) \in R$, i takich $b$
+jest skończenie wiele.
+Jeżeli istnieje iniekcja $f: A_0 \hookrightarrow B$ zgodna z $R$
+(tzn. $(a, f(a)) \in R$) dla każdego skończonego $A_0 \subset A$, to istnieje
+iniekcja $f: A \hookrightarrow B$ zgodna z $R$.
 \end{theorem}
 
 \begin{proof}
-Stwórzmy zmienną $P_{ab}$ dla każdego $a \in A$ i $b \in B$.
-Stwórzmy formuły:
+Stwórzmy zmienną $P_{ab}$ dla każdego $(a, b) \in R$.
+Rozważmy formuły:
 \begin{enumerate}
-	\item $P_{ab_1} \vee \dots \vee P_{ab_k}$
-		dla każdego $a$ i wszystkich sparowanych z nim $b$
-	\item $\neg P_{ab_i} \vee \neg P_{ab_j}$
-		dla każdego $a$ i wszystkich sparowanych z nim $b_i, b_j$
-	\item $\neg P_{a_ib} \vee \neg P_{a_jb}$
-		dla każdego $b$ i wszystkich sparowanych z nim $a_i, a_j$
+  \item $P_{ab_1} \vee \dots \vee P_{ab_k}$
+    dla każdego $a$ i wszystkich sparowanych z nim $b$
+  \item $\neg P_{ab_i} \vee \neg P_{ab_j}$
+    dla każdego $a$ i wszystkich sparowanych z nim $b_i, b_j$
+  \item $\neg P_{a_ib} \vee \neg P_{a_jb}$
+    dla każdego $b$ i wszystkich sparowanych z nim $a_i, a_j$
 \end{enumerate}
-
-% TODO - koniec dowodu
-\textit{TODO - koniec dowodu}
-
+Weźmy dowolny skończony zbiór tych formuł. Niech $A_0$ będzie zbiorem wszystkich
+elementów $a \in A$ takich, że przynajmniej jedna ze zmiennych $P_{ab_i}$
+występuje wśród wybranych formuł. Zauważmy, że zbiór ten jest skończony, zatem
+z założenia wiemy, że istnieje odpowiednia iniekcja. To jednak oznacza, że
+wybrany zbiór formuł jest spełnialny (wystarczy wziąć wartościowanie
+$P_{ab} = 1 \text{ wtw. } f(a) = b$). Z twierdzenia o zwartości wiemy teraz, że
+zbiór wszystkich naszych formuł jest spełnialny. Łatwo zauważyć, że wynika
+z tego istnieje iniekcji dla całego zbioru $A$.
 \end{proof}
+
+\begin{theorem}[Erdoesa-De Brujina]
+Graf jest $k$-kolorowalny wtedy i wtedy, gdy każdy jego skończony podgraf
+jest $k$-kolorowalny.
+\end{theorem}
+
+\begin{theorem}
+Homomorfizm z przeliczalnego grafu $G$ w skończony graf $H$ istnieje
+wtedy i tylko wtedy, gdy dla każdego skończonego podgrafu $G_0 \subset G$
+istnieje homomorfizm $G_0 \to H$.
+\end{theorem}
+
+
+
+\section{Logika minimalna i dowody Gentzena}
+
+Od teraz w naszym języku używamy wyłącznie implikacji $\impl$.
+
+\begin{definition}
+Sekwend Gentzena to napis postaci $\Gamma \vdash A$, gdzie $\Gamma$ jest zbiorem
+formuł, a $A$ jest formułą.
+\end{definition}
+
+\header{Reguły dowodzenia}
+\begin{itemize}
+  \item Modus Ponens (MP)
+    $$\frac{\Gamma \vdash A \impl B, \ \Gamma \vdash A}{\Gamma \vdash B}$$
+  \item Implication Introduction (II)
+    $$\frac{\Gamma,A \vdash B}{\Gamma \vdash A \to B}$$
+\end{itemize}
+
+\header{Aksjomat}
+$$\Gamma, A \vdash A$$
+
+\begin{definition}
+Dowód Gentzena sekwendu $\Gamma \vdash A$, to drzewo, w którego liściach są
+aksjomaty, wierzchołki wewnętrzne odpowiadają regułom dowodzenia, a w korzeniu
+jest dowodzony sekwend.
+\end{definition}
+
+\noindent Notacja: $\vdash A := \emptyset \vdash A$.
+
+\begin{remark}
+Jeśli $\Gamma \vdash A$ ma dowód i $\Gamma' \supset \Gamma$, to
+$\Gamma' \vdash A$ ma dowód.
+\end{remark}
+
+%TODO: przykłady dowodów dla S, K i ((A > A) > A) > A
+
+\begin{definition}[Logika intuicjonistyczna]
+$I = Cn(K, S)$
+\end{definition}
+
+\begin{theorem}[Hilberta]
+$A \in Cn_I(\Gamma)$ wtedy i tylko wtedy, gdy sekwend $\Gamma \vdash A$ ma
+dowód Gentzena.
+\end{theorem}
+
+\begin{proof}
+$\Rightarrow$ -- trywialny, $\Leftarrow$ -- nudny i łatwy.
+%TODO: może jednak przydałby się trochę dokładniejszy dowód ;)
+\end{proof}
+
+\header{Typowany rachunek $\lambda$ (a la Church)}
+\begin{itemize}
+  \item Budowa termu:
+    $$\Gamma \vdash M:\tau,$$
+    gdzie $\Gamma = \{x_1:\tau_1, \ldots, x_n:\tau_n\}$ -- kontekst,
+    $x_i$ -- parami różne zmienne
+    $\tau_i$ -- formuły (traktowane przez nas jako typy zmiennych).
+    Czytamy: w kontekście $\Gamma$ term $M$ ma typ $\tau$.
+  \item Reguły wyprowadzania termów:
+    \begin{itemize}
+      \item Aplikacja
+        $$\frac{
+          \Gamma \vdash M : \tau \impl \mu, \ \Gamma \vdash N : \tau
+        }{
+          \Gamma \vdash MN : \mu
+        }$$
+      \item Abstrakcja
+        $$\frac{
+          \Gamma, x:\tau \vdash N : \mu
+        }{
+          \Gamma \vdash \lambda x . N : \tau \impl \mu
+        }$$
+      \item Aksjomat
+        $$\Gamma, x:\tau \vdash x:\tau$$
+    \end{itemize}
+\end{itemize}
+
+\begin{example}[Dowód aksjomatu K jako $\lambda$-term]
+\begin{align*}
+x:A, y:B &\vdash x:A \\
+x:A &\vdash \lambda y . x : B \impl A \\
+&\vdash \lambda xy . x : A \impl (B \impl A)
+\end{align*}
+\end{example}
+
+%TODO: analogiczny dowód dla aksjomatu S.
 
 \end{document}
 
