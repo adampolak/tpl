@@ -865,5 +865,100 @@ x:A &\vdash \lambda y . x : B \impl A \\
 
 %TODO: analogiczny dowód dla aksjomatu S.
 
+\subsection{Curry - Howard}
+
+Hilbert $\leftrightarrow$ Gentzen $\leftrightarrow$ typowany $\lambda$-rachunek.\\
+Formuły ($\rightarrow$) i typy to to samo. $\tau\in \text{Typ(formuła)}$
+
+\begin{theorem}
+(1) $\iff$ (2)\\
+(1) $\vdash$ $\tau$ ma dowód Gentzena\\
+(2) istnieje term domknięty $M:\tau$ taki, że: $\vdash M:\tau$ (opis dowodu)
+\end{theorem}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/typowaneWyprowadzenie}
+\end{center}
+Szukamy dowodów (w postaci termu $\lambda$)
+\begin{align*}
+\lambda x_A . x_A &: A \rightarrow A\\
+\lambda x_A x_B . x_A &: A \rightarrow (B \rightarrow A)\\
+\lambda x_{A\rightarrow (B\rightarrow C)} y_{A\rightarrow B} z_A
+	.(x_{A\rightarrow (B\rightarrow C)}z_{A})(y_{A\rightarrow B}z_{A}) &:
+	(A \rightarrow (B \rightarrow C))\rightarrow
+		((A \rightarrow B) \rightarrow (A \rightarrow C)) \\
+\lambda xyz . (xz)(yz) &\\
+xyz . y(zx) 
+	&: (A \rightarrow B) \rightarrow
+		(( B \rightarrow C) \rightarrow ( A \rightarrow C)) \\
+\\
+((A\rightarrow A)\rightarrow A)\rightarrow A &\\
+\lambda x_{(A\rightarrow A)\rightarrow A} . x (\lambda z_A . z_A) &\\
+\lambda x_{(A \rightarrow A) \rightarrow A} . x (\lambda z_A . x(\lambda y_A)) & :
+((A \rightarrow B)\rightarrow A) \rightarrow A \text{: nie ma programu}
+\end{align*}
+Rachunek $\lambda$-bez typów.
+Dany jest term $\lambda$-rachunku M-domknięty.\\
+Problem: Czy istnieje typ $\tau$ taki, że $\vdash M : \tau$.
+\begin{definition}
+$A$, $B$ - formuły (typy); $A$ jest bardziej ogólny niż $B$, gdy $B$ powstaje z $A$ przez podstawienie za zmienne w $A$ pewnych formuł.
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/podstawienieZmiennych}
+\end{center}
+Relacja ta jest przechodnia i zwrotna. $\leq$
+\end{definition}
+
+\begin{lemma}
+$A \leq B$ i $B \leq A$ to $A$ i $B$ są identyczne z dokładnością do nazw zmiennych.
+\end{lemma}
+
+
+\begin{example}
+$A \rightarrow (B \rightarrow A)$ jest identyczne z $C \rightarrow (B \rightarrow C)$
+\end{example}
+
+\begin{definition}
+Term $M$-domknięty nietypowanego rachunku $\lambda$ jest typowany, gdy istnieje typ $\tau$ taki, że $\vdash M:\tau$
+\end{definition}
+
+
+\begin{theorem}[R. Hindley]
+Istnieje algorytm mający na wejściu domknięty term $\lambda$ i zwracający najbardziej ogólny typ tego termu, o ile istnieje lub NIE, gdy nie istnieje.
+\end{theorem}
+
+\begin{theorem}[converse principal type algorithm]
+Dla każdego typu $\tau$ takiego, że $\vdash \tau$ istnieje term $M$ taki, że $\vdash M:\tau$ i $\tau$ jest principal.
+\end{theorem}
+
+Przykłady znajdowania najbardziej ogólnego typu:
+\begin{align*}
+\underline{0} & = \lambda xy. y  & A \rightarrow (B \rightarrow B) &\\
+\underline{1} & = \lambda xy. xy  & (B \rightarrow C) \rightarrow (B \rightarrow C) &\\
+\underline{2} & = \lambda xy. x(xy) &  (B \rightarrow B) \rightarrow (B \rightarrow B) & \quad \mathbb{N} \text{ (typ liczb naturalnych)}
+\end{align*}
+Typ operacji arytmetycznych: $\mathbb{N} \rightarrow(\mathbb{N} \rightarrow\mathbb{N})$\\
+Słowa: $(B\rightarrow B) \rightarrow ((B\rightarrow B) \rightarrow (B\rightarrow B))$\\
+Drzewa: $(B\rightarrow B\rightarrow B) \rightarrow (B \rightarrow B)$\\
+sklejanie drzew: $\textbf{(B$\rightarrow$ B$\rightarrow$ B)} \rightarrow (B \rightarrow B)$\\
+początkowy węzeł: $(B\rightarrow B\rightarrow B) \rightarrow (\textbf{B} \rightarrow B)$\\
+\\
+$\lambda z_{B\rightarrow B\rightarrow B} x_B . z(zxx)(zx(zxx))$
+\begin{center}
+\includegraphics[width=0.3\textwidth]{img/lambdaTermJakoDrzewo}
+\end{center}
+Czy istnieje typ dla $\lambda x . xx$?\\
+Jeśli typy są skończone to nie.\\
+\\
+Czy istnieje typ dla $\lambda xy . x(yx)$?
+\begin{align*}
+x &\text{ : } B\\
+y &\text{ : } B \rightarrow C\\
+x &\text{ : } C \rightarrow D
+\end{align*}
+$$(C\rightarrow D)\rightarrow((C\rightarrow D \rightarrow C)\rightarrow D)$$
+Unknown headline.
+\begin{center}
+\includegraphics[width=0.8\textwidth]{img/rysunekWKtorymNieWiemOCoChodzi}
+\end{center}
+
 \end{document}
 
