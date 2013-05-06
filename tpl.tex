@@ -11,6 +11,9 @@
 \usepackage{graphicx}
 \usepackage{sidecap}
 
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
 \theoremstyle{plain}
 \newtheorem{theorem}{Twierdzenie}
 \newtheorem{lemma}{Lemat}
@@ -960,5 +963,274 @@ Unknown headline.
 \includegraphics[width=0.8\textwidth]{img/rysunekWKtorymNieWiemOCoChodzi}
 \end{center}
 
-\end{document}
+\section{Logika pierwszego rzędu}
+\subsection{Oznaczenia}
+\begin{itemize}
+  \item Zmienne: $x, y, z,\ldots$
+  \item Symbole funkcyjne (o~różnej arności): $f, g,\ldots$
+  \item Symbole predykatywne (o~różnej arności): $p, q,\ldots$
+  \item Stałe: $a,b,c,\ldots$ (można też na nie patrzeć jak na symbole funkcyjne
+    o~arności 0).
+\end{itemize}
 
+\subsection{Definicje}
+\begin{definition}[Term]
+  ~\begin{itemize}
+    \item Stałe i~zmienne są termami.
+    \item Jeżeli $t_1,\ldots,t_k$ są termami, a~$f$ jest $k$-arnym symbolem
+      funkcyjnym to $f(t_1,\ldots,t_k)$ też jest termem.
+    \item Nic innego nie jest termem.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Formuła atomowa]
+  \emph{Formuła atomowa} to napis $p(t_1,\ldots,t_n)$, gdzie $p$ jest $n$-arnym
+  symbolem predykatywnym, a $t_1,\ldots,t_n$ -- termami.
+\end{definition}
+
+\begin{definition}[Literał]
+  Literał to formuła atomowa bądź jej zaprzeczenie ($\lnot A$).
+\end{definition}
+
+\begin{definition}[Formuła]
+  ~\begin{itemize}
+    \item Formuła atomowa jest formułą.
+    \item Jeśli $A$~i~$B$ są formułami i~$x$ zmienną to formułami są również:
+    ,,$A\land B$'', ,,$A\lor B$'', ,,$A\impl B$'', ,,$\lnot A$'',
+    ,,$A\leftrightarrow B$'', ,,$\forall x A$'' oraz ,,$\exists x A$''.
+    \item Nic innego nie jest formułą.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Zmienna wolna, formuła domknięta]
+  \emph{Zmienna wolna} to zmienna nieznajdująca się pod działaniem żadnego
+  kwantyfikatora. \emph{Formuła domknięta} to taka formuła, która 
+  nie ma żadnych zmiennych wolnych.
+\end{definition}
+
+\begin{definition}[Klauzula]
+  \emph{Klauzula} to formuła postaci:
+  \[
+    \forall x_1 \forall x_2 \ldots \forall x_m
+      L_1 \lor L_2 \lor \ldots \lor  L_n
+  \]
+  gdzie $L_1, L_2, \ldots, L_n$ to literały, a $\lbrace x_1, x_2, \ldots, x_m
+  \rbrace$ jest zbiorem wszystkich zmiennych występujących
+  w~$L_1, L_2,\ldots, L_n$.
+\end{definition}
+
+\begin{definition}[Notacja ze strzałką dla klauzul]
+$A_1,\ldots,A_p \leftarrow B_1,\ldots,B_q$ oznacza klauzulę
+$\forall x_1 \ldots \forall x_n
+  A_1 \lor \ldots \lor A_p\lor
+  \lnot B_1 \lor \ldots \lor \lnot B_q$.
+\end{definition}
+
+\begin{definition}[Szczególne klauzule]
+  ~\begin{itemize}
+    \item Klauzula programu: $A \leftarrow B_1,\ldots,B_q$ dla $q \ge 0$
+    \item Fakt: $A \leftarrow$
+    \item Sprzeczność: $\leftarrow$ (inne oznaczenie:~$\square$)
+    \item Klauzula celu: $\leftarrow B_1,B_2,\ldots,B_q$
+    \item Klauzula Horna: klauzula programu lub celu
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Program]
+  \emph{Program} to skończony zbiór klauzul programu.
+\end{definition}
+
+\section{Modele programów}
+\subsection{Definicje}
+\begin{definition}[Model]
+  Model $M$ to para $(D, I)$, gdzie $D \ne \emptyset$ jest \emph{dziedziną},
+  a~$I$ -- \emph{interpretacją symboliki}. 
+
+  $I(a) \in D$, gdy $a$ jest stałą; $I(f) \in D^{D^n}$, gdy $f$ jest funkcją
+  $n$-arną; $I(p) \in \lbrace 0, 1 \rbrace^{D^n}$, gdy $p$ jest predykatem
+  $n$-arnym.
+\end{definition}
+
+\begin{definition}[Interpretacja termów i formuł]
+  Ustalmy model $M=(D,I)$.  Niech $v$ będzie \emph{oceną zmiennych},
+  czyli funkcją $v : \lbrace x, y, z,\ldots \rbrace \rightarrow D$.
+  Wtedy $\text{val}^{M,v}(t)$ jest \emph{interpretacją termu} $t$:
+  \begin{itemize}
+    \item $\text{val}^{M,v}(x) = v(x)$ ($x$ -- zmienna)
+    \item $\text{val}^{M,v}(a) = I(a)$ ($a$ -- stała)
+    \item $\text{val}^{M,v}(f(t_1,t_2,\ldots,t_n)) =
+      I(f)(\text{val}^{M,v}(t_1), \mathrm{val}^{M,v}(t_2), \ldots,
+      \text{val}^{M,v}(t_n))$ ($f$ -- funkcja $n$-arna)
+  \end{itemize}
+  Natomiast $\text{val}^{M,v}(\Phi)$ jest \emph{interpretacją formuły} $\Phi$:
+  \begin{itemize}
+    \item $\text{val}^{M,v}(p(t_1,t_2,\ldots,t_n)) =
+      I(p)(\text{val}^{M,v}(t_1), \mathrm{val}^{M,v}(t_2), \ldots,
+      \text{val}^{M,v}(t_n))$ ($p$ -- predykat $n$-arny)
+    \item $\text{val}^{M,v}(\phi \impl \psi) =
+      \max(1 - \text{val}^{M,v}(\phi), \mathrm{val}^{M,v}(\psi))$
+      ($\phi$, $\psi$ -- formuły)
+    \item Pozostałe spójniki logiczne definiujemy analogicznie
+    \item $\text{val}^{M,v}(\forall x \Psi) = \begin{cases}
+        1 & \text{gdy istnieje } d \in D \text{ takie, że }
+        \text{val}^{M,v'}(\Psi) = 1 \\
+        0 & \text{wpp}
+      \end{cases}$, gdzie $v'$ jest wartościowaniem $v$ z~$x$ podmienionym
+      na $d$: $v'(\phi) = \begin{cases} v(\phi) & \text{gdy } \phi \ne x \\
+      d & \text{gdy } \phi = x \end{cases}$
+    \item $\text{val}^{M,v}(\exists x \Psi)$ definiujemy analogicznie
+  \end{itemize}
+
+  Zauważmy, że jeśli $\Phi$ jest formułą domkniętą, to jej interpretacja
+  $\text{val}^{M,v}(\Phi)$ nie zależy od $v$ -- będziemy więc ją oznaczać
+  jako $\text{val}^{M}(\Phi)$.
+\end{definition}
+
+\begin{definition}[Model dla formuły]
+  Model $M=(D,I)$ jest \emph{modelem dla formuły domkniętej} $\Phi$ gdy
+  $\text{val}^M(\Phi) = 1$.
+  
+  Model $M$ jest \emph{modelem dla zbioru} $S$ formuł domkniętych wtedy i~tylko wtedy,
+  gdy jest modelem dla każdej formuły ze zbioru $S$.
+\end{definition}
+
+\begin{definition}[Tautologia]
+  Formuła $\Phi$ jest \emph{tautologią} gdy każdy model $M$ jest modelem dla
+  $\Phi$.
+\end{definition} 
+
+\begin{definition}[Formuła spełnialna]
+  Formuła $\Phi$ jest \emph{spełnialna} gdy istnieje dla niej model.
+\end{definition} 
+
+\begin{definition}[Konsekwencja logiczna]
+  Formuła $\Phi$ jest \emph{konsekwencją logiczną} zbioru formuł $S$
+  gdy każdy model dla $S$ jest też modelem dla $\Phi$. Oznaczamy to następująco:
+  $S \models \Phi$.
+
+  \begin{theorem}
+    $S \models \Phi$ wtedy i~tylko wtedy, gdy $S \cup \lbrace\lnot\Phi\rbrace$
+    jest niespełnialny (dowód łatwy).
+  \end{theorem}
+\end{definition}
+
+\subsection{Przykłady}
+\subsubsection{Tautologie}
+\begin{itemize}
+  \item $\left(\exists y \forall x~p(x,y)\right) \impl \left(\forall x \exists
+      y~p(x,y)\right)$
+  \item $\left(\forall x~p(x, f(x)) \right) \impl \left(\forall x \exists 
+    y~p(x,y)\right)$
+\end{itemize}
+\subsubsection{Paradoks fryzjera}
+Fryzjer goli wszystkich tych, którzy nie golą się sami. Czy goli więc sam
+siebie?  Łatwo zauważyć, że taki fryzjer nie może istnieć. Zapiszmy to 
+za pomocą formuł. Niech $p(x)$ oznacza ,,$x$ jest fryzjerem'', a~$q(x, y)$ --
+,,$x$ goli $y$''. Wtedy formuła stwierdzająca, że nie istnieje taki fryzjer
+wygląda następująco:
+\[
+  \left[\forall x~p(x)\impl \forall y~\left(g(x,y) \leftrightarrow \lnot g(y,y)
+  \right)\right] \impl \lnot \exists x~p(x)
+\]
+
+\subsubsection{Modele skończone i~nieskończone}
+Wszystkie skończone modele są modelami dla tej formuły, ale istnieją modele
+nieskończone (na przykład $(\mathbb{Z}, \lbrace p \text{ interpretujemy jako }\le
+\rbrace)$), które nie są dla niej modelami:
+\[
+  \left[\left(\forall x~p(x,x)\right) \land \left(\forall x, y, z~\left(p(x,y)
+    \land p(y,z)\right) \impl p(y,z)\right) \land \left(\forall x,y~p(x,y)\lor
+  p(y,x)\right)\right] \impl \exists y \forall x~p(y,x)
+\]
+Interpretacja: ,,dla każdej symetrycznej, przechodniej i~pełnej relacji
+istnieje element najmniejszy''.
+
+\subsubsection{Program: dodawanie}
+Stworzymy takie klauzule, żeby predykat $\text{ADD}(x,y,z)$ był spełniony tylko
+dla $z = x+y$ (gdzie $x+1$ rozumiemy jako zastosowanie funkcji $s$ na $x$:
+$s(x)$). Oprócz predykatu $\text{ADD}$ i~funkcji $s$ będzie nam jeszcze
+potrzebna stała $0$.
+
+\begin{center}\begin{tabular}{l | l | l}
+  Nazwa & Postać ze strzałką & Postać standardowa \\
+  \hline
+  $C_1$ & $\text{ADD}(0, x, x) \leftarrow$ & $\forall x~\text{ADD}(0, x, x)$ \\
+  $C_2$ & $\text{ADD}(s(x),y,s(z)) \leftarrow \text{ADD}(x,y,z)$ & 
+    $\forall x, y, z~\left(\text{ADD}(s(x),y,s(z)) \lor \lnot \text{ADD}(x,y,z)
+    \right)$ 
+\end{tabular}\end{center}
+
+\paragraph{Program dla $1 + 1 = 2$}\mbox{}\\
+
+Dodajmy do klauzul $C_1$ i~$C_2$ klauzulę celu $G$:
+
+\begin{center}\begin{tabular}{l | l | l}
+  Nazwa & Postać ze strzałką & Postać standardowa \\
+  \hline
+  $G$ & $\leftarrow \text{ADD}(s(0), s(0), s(s(0)))$ & $\lnot \text{ADD}(s(0),
+    s(0), s(s(0)))$ 
+\end{tabular}\end{center}
+
+Pokażemy, że zbiór $\lbrace C_1, C_2, G \rbrace$ jest niespełnialny, a~co za tym
+idzie, że $\lbrace C_1, C_2 \rbrace \models$\linebreak
+$\text{ADD}(s(0), s(0), s(s(0)))$.
+\begin{proof}
+  Załóżmy, że $\lbrace C_1, C_2, G \rbrace$ jest spełnialny. Do $C_2$
+  podstawiamy $x := 0, y:= s(0), z:=s(0)$.
+  \[
+    \text{ADD}(s(0),s(0),s(s(0))) \lor \lnot \text{ADD}(0, s(0), s(0))
+  \]
+  Założyliśmy, że w~naszym modelu zachodzi $G$, więc:
+  \[
+    \lnot \text{ADD}(0, s(0), s(0))
+  \]
+  Ale to stoi w~sprzeczności z~$C_1$ z~podstawionym $x:=s(0)$.
+\end{proof}
+
+\paragraph{Program dla $1+v = 2$}\mbox{}\\
+
+Dodajmy do klauzul $C_1$ i~$C_2$ klauzulę celu $G'$:
+
+\begin{center}\begin{tabular}{l | l | l}
+  Nazwa & Postać ze strzałką & Postać standardowa \\
+  \hline
+  $G'$ & $\leftarrow \text{ADD}(s(0), v, s(s(0)))$ &
+    $\forall v~\lnot \text{ADD}(s(0), v, s(s(0)))$ 
+\end{tabular}\end{center}
+
+Pokażemy, że zbiór $\lbrace C_1, C_2, G' \rbrace$ jest niespełnialny, a~co za tym
+idzie, że $\lbrace C_1, C_2 \rbrace \models$\linebreak
+$\exists v~\text{ADD}(s(0), v, s(s(0)))$.
+
+\begin{proof}
+  Załóżmy, że $\lbrace C_1, C_2, G' \rbrace$ jest spełnialny.
+
+\begin{center}
+\begin{tikzpicture}[grow=up, level 1/.style={sibling distance=30mm},
+  level distance=20mm]
+  \node{$\square$}  
+    child {
+      node {$C_1$}
+      edge from parent 
+      node[right]{$x := s(0)$}
+    }
+    child {
+      node {$\lnot\text{ADD}(0,y,s(0))$}
+      child {
+        node {$\lnot G'$}
+        edge from parent 
+        node[right]{$v := y$}
+      }
+      child {
+        node {$\lnot C_2$}
+        edge from parent 
+        node[left, align=center]{$x := 0$,\\$z := s(0)$}
+      }
+      edge from parent 
+      node[left]{$y := s(0)$}
+    };
+\end{tikzpicture}
+\end{center}
+\end{proof}
+
+\end{document}
