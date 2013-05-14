@@ -1233,4 +1233,134 @@ $\exists v~\text{ADD}(s(0), v, s(s(0)))$.
 \end{center}
 \end{proof}
 
+% wykład 14.05.2013
+\begin{theorem}[Herbrant]
+Niech $S$ - zbiór klauzul. $S$ jest spełnialny wtedy i tylko wtedy, gdy $S$ jest spełnialny w modelu Herbranta.
+\begin{proof}[$\Rightarrow$]
+\[ I = \lbrace~p (t_1, \ldots, t_k) \in B_L : p (t_1, \ldots, t_k) \text{ jest prawdziwy w modelu } M~\rbrace \]
+\[ \bar{M} = (U_L, I) \text{ jest modelem Herbranta dla zbioru } S \]
+
+Zauważmy, że każdy element $I$ jest prawdziwy w $\bar{M}$. Będziemy sprawdzać prawdziwość klauzul
+ $S \ni C = \forall_{x_1,\ldots,x_k} L_1 \lor \ldots \lor L_n$. Weźmy dowolny nabór $t_1,\ldots,t_k \in U_L$.
+
+\[ D \ni \left\{ 
+  \begin{array}{l l}
+    val_{v}^{M}(t_1) = d_1 & \quad \\
+    val_{v}^{M}(t_2) = d_2 & \quad \\
+    \ldots & \quad \\
+    val_{v}^{M}(t_k) = d_k & \quad
+  \end{array} \right.\]
+
+$L'_{1} \lor \ldots \lor L'_{n}$ jest prawdziwe w $M$, gdzie $L'_i = L_i [{}^{x_1}/_{t_1}, \ldots, {}^{x_k}/_{t_k}]$.
+Istnieje $i \leq n$, że $L'_i$ jest prawdziwa w $M$. Zatem $L'_i \in I$.
+\end{proof}
+\end{theorem}
+
+\begin{theorem}
+$I, J$ - dwa modele Herbranta dla programu $P$. Postać ich klazul to:
+\[ C = \forall_{x_1,\ldots,x_k} A \lor \lnot B_1 \lor \ldots \lor \lnot B_n \]
+$I \cap J$ - jest modelem Herbranta dla programu $P$.
+\end{theorem}
+
+\begin{theorem}
+Niech $\alpha = \lbrace I_i \rbrace$ - niepusta rodzina modeli Herbranta dla $P$, to $\bigcap I_i$ jest modelem dla $P$.
+\begin{proof}
+Pokazujemy, że $C = \forall_{x_1,\ldots,x_k} A \lor \lnot B_1 \lor \ldots \lor \lnot B_n$ jest prawdziwe w $\bigcap \alpha$.
+Niech $t_1,\ldots,t_k \in U_L$. Rozważmy $A' \lor \lnot B'_1 \lor \ldots \lor \lnot B'_n$, gdzie $A' = A[{}^{x_1}/_{t_1}, \ldots, {}^{x_k}/_{t_k}]$
+(analogicznie definiujemy $B'_i$). Rozważmy przypadki:
+
+\begin{enumerate}
+  \item $\forall_{I_i \in \alpha} : A' \in I_i$. Stąd $A' \in \bigcap \alpha$, zatem $A'$ zachodzi.
+  \item $B'_j \not\in I_i$ dla pewnego $I_i \in \alpha$. Stąd $B'_j \not\in \bigcap \alpha$.
+\end{enumerate}
+\end{proof}
+\end{theorem}
+
+\subsubsection{Konstrukcja modelu minimalnego}
+Niech $\alpha$ - rodzina wszystkich modeli Herbranta dla programu $P$. Zauważmy, że $\alpha \neq \emptyset$, ponieważ należy tam model
+($U_L, B_L$). Niech $M_p = \bigcap \alpha$ - model kanoniczny programu $P$.
+
+\begin{theorem}
+\[ M_p = \lbrace A \in B_L : A \text{ jest konsekwencją } P \rbrace \]
+\begin{proof}
+Następujące warunki są sobie równoważne:
+\begin{enumerate}
+  \item $A$ jest konsekwencją $P$
+  \item $P \cup \lbrace \lnot A \rbrace$ jest niespełnialny
+  \item $P \cup \lbrace \lnot A \rbrace$ nie ma modelu Herbranta
+  \item $\lnot A$ jest fałszywe w każdym modelu Herbranta dla programu $P$
+  \item $A$ jest prawdziwe w każdym modelu Herbranta dla programu $P$
+  \item $A \in I$ dla każdego $I$, będącego modelem Herbranta dla programu $P$
+  \item $A \in \bigcap I = M_p$
+\end{enumerate}
+\end{proof}
+\end{theorem}
+
+\begin{definition}
+Niech ($S, \leq$) - częściowy porządek. $a$ jest \emph{ograniczeniem górnym} dla $X \subset S$, gdy $\forall x \in X : x \leq a$.
+$a$ jest \emph{supermum} dla $X$, gdy jest najmniejszym ograniczeniem górnym $X$. Oznaczenie: $\sqcup X = a$ - $a$ jest supremum dla $X$.
+Analogicznie definiujemy ograniczenie dolne i infimum dla zbioru $X$, które oznaczamy $\sqcap X$.
+\end{definition}
+
+\begin{definition}
+($S, \leq$) jest \emph{kratą zupełną} gdy każdy $X \subset S$ posiada $\sqcup X$ i $\sqcap X$.
+Zauważmy, że zachodzą $\sqcup S = \top$, $\sqcap S = \bot$, $\sqcup \emptyset = \bot$, $\sqcap \emptyset = \top$.
+\end{definition}
+
+\begin{example}
+$(P(L), \subset)$, gdzie $\sqcup = \bigcup$ oraz $\sqcap = \bigcap$.
+\end{example}
+
+\begin{definition}
+$L$ - krata zupełna, to $T : L \to L$ jest \emph{monotoniczna}, gdy $x \leq y$ to $T(x) \leq T(y)$.
+\end{definition}
+
+\begin{definition}
+$X \subset L$ jest zbiorem skierowanym, gdy dla każdego skończonego podzbioru $X$ istnieje supremum należące do $X$.
+\end{definition}
+
+\begin{definition}
+$T : L \to L$ jest ciągła, gdy $T(\sqcup X) = \sqcup T(X)$ dla wszystkich $X$ skierowanych.
+\end{definition}
+
+\begin{lemma}
+$T$ - ciagła, to $T$ - monotoniczna.
+\begin{proof}
+Niech $x \leq y$, $X = \lbrace x, y \rbrace$ - skierowane.
+$T(\sqcup \lbrace x, y \rbrace) = T(y) = \sqcup \lbrace T(x), T(y) \rbrace$, zatem $T(x) \leq T(y)$.
+\end{proof}
+\end{lemma}
+
+\begin{definition}
+$T : L \to L$ ma punkt stały gdy istnieje $a$, że $T(a) = a$. Będziemy oznaczać najmniejszy punkt stały poprzez $lfp(T)$,
+ a największy poprzez $gfp(T)$.
+\end{definition}
+
+\begin{theorem}[Knaster, Tarski]
+$L$ - krata zupełna, $T : L \to L$ - monotoniczna, to $lfp(T)$ i $gfp(T)$ istnieją oraz dodatkowo:
+\[ lfp(T) = \sqcap \lbrace x \in L : T(x) = x \rbrace = \sqcap \lbrace x \in L : T(x) \leq x \rbrace \]
+\[ gfp(T) = \sqcup \lbrace x \in L : T(x) = x \rbrace = \sqcup \lbrace x \in L : T(x) \geq x \rbrace \]
+
+\begin{proof}{(dla $lfp$, $gfp$ jest analogiczny)}
+
+$G = \lbrace x \in L : T(x) \leq x \rbrace \neq \emptyset$, bo $\top \in G$. Niech $g = \sqcap G$.
+$\forall x \in G : g \leq x$. Ponieważ $T : L \to L$, możemy tę równość obłożyć $T$ z obu stron otrzymując
+$\forall x \in G : T(g) \leq T(x)$. Zauważmy, że dodatkowo zachodzi $T(x) \leq x$ z definicji $G$. Zatem mamy
+$\forall x \in G : T(g) \leq x$. Ponieważ $T(g)$ jest ograniczeniem dolnym dla $G$ mamy $T(g) \leq g$, zatem $T(g) \in G$.
+Z drugiej strony również $T(g) \in G$, bo $T(T(g)) \leq T(g)$. Ale też $T(g) \geq g$, więc $T(g) = g$.
+
+$g \in G' = \lbrace x \in L : T(x) = x \rbrace$. Niech $g' = \sqcup G'$. Łatwo zauważyć, że $g = g'$.
+\end{proof}
+\end{theorem}
+
+\subsubsection{Iteracja pozaskończona}
+Określimy $T \uparrow \alpha$, dla dowolnej liczby porządkowej $\alpha$.
+\begin{definition}
+$\alpha$ jest następnikiem, bądź jest graniczna. W przypadku następnika iteracja wygląda następująco:
+\[ T \uparrow 0 = \bot \]
+\[ T \uparrow (\alpha + 1) = T(T \uparrow \alpha) \]
+\end{definition}
+W przypadku liczby granicznej nie będącej zerem, iteracja wygląda następująco:
+\[ \forall \beta < \alpha : T \uparrow \beta \text{ - zdefiniowane} \]
+\[ T \uparrow \alpha = \sqcup \lbrace T \uparrow \beta : \beta < \alpha \rbrace \]
 \end{document}
