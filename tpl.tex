@@ -1233,12 +1233,25 @@ $\exists v~\text{ADD}(s(0), v, s(s(0)))$.
 \end{center}
 \end{proof}
 
-% wykład 14.05.2013
-\begin{theorem}[Herbrant]
-Niech $S$ - zbiór klauzul. $S$ jest spełnialny wtedy i tylko wtedy, gdy $S$ jest spełnialny w modelu Herbranta.
+\begin{definition}
+Niech $L$ będzie językiem pierwszego rzędu (zbiorem stałych, symboli funkcyjnych i symboli
+predykatywnych).
+
+Uniwersum Herbranda $U_L$ nazywamy zbiór termów stałych języka L -- tzn. stałych
+i dowolnych złożeń funkcji wyewaluowanych na stałych. Jeśli język nie posiada stałych, dodajemy
+sztucznie jedną stałą $a$.
+
+Bazą Herbranda $B_L$ nazywamy zbiór predykatów atomowych wypełnionych termami stałymi ($U_L$).
+
+Model Herbranda to para $(U_L, I)$, gdzie $I \subset B_L$. Interpretacja termów w tym języku
+jest naturalna, zaś predykat interpretujemy jako prawdziwy wtw. gdy należy do $I$.
+\end{definition}
+
+\begin{theorem}[Herbrand]
+Niech $S$ -- zbiór klauzul. $S$ jest spełnialny wtedy i tylko wtedy, gdy $S$ jest spełnialny w pewnym modelu Herbranda.
 \begin{proof}[$\Rightarrow$]
 \[ I = \lbrace~p (t_1, \ldots, t_k) \in B_L : p (t_1, \ldots, t_k) \text{ jest prawdziwy w modelu } M~\rbrace \]
-\[ \bar{M} = (U_L, I) \text{ jest modelem Herbranta dla zbioru } S \]
+\[ \bar{M} = (U_L, I) \text{ jest modelem Herbranda dla zbioru } S \]
 
 Zauważmy, że każdy element $I$ jest prawdziwy w $\bar{M}$. Będziemy sprawdzać prawdziwość klauzul
  $S \ni C = \forall_{x_1,\ldots,x_k} L_1 \lor \ldots \lor L_n$. Weźmy dowolny nabór $t_1,\ldots,t_k \in U_L$.
@@ -1257,13 +1270,13 @@ Istnieje $i \leq n$, że $L'_i$ jest prawdziwa w $M$. Zatem $L'_i \in I$.
 \end{theorem}
 
 \begin{theorem}
-$I, J$ - dwa modele Herbranta dla programu $P$. Postać ich klazul to:
+$I, J$ -- dwa modele Herbranda dla programu $P$. Postać ich klauzul to:
 \[ C = \forall_{x_1,\ldots,x_k} A \lor \lnot B_1 \lor \ldots \lor \lnot B_n \]
-$I \cap J$ - jest modelem Herbranta dla programu $P$.
+$I \cap J$ jest modelem Herbranda dla programu $P$.
 \end{theorem}
 
 \begin{theorem}
-Niech $\alpha = \lbrace I_i \rbrace$ - niepusta rodzina modeli Herbranta dla $P$, to $\bigcap I_i$ jest modelem dla $P$.
+Niech $\alpha = \lbrace I_i \rbrace$ -- niepusta rodzina modeli Herbranda dla $P$, to $\bigcap I_i$ jest modelem dla $P$.
 \begin{proof}
 Pokazujemy, że $C = \forall_{x_1,\ldots,x_k} A \lor \lnot B_1 \lor \ldots \lor \lnot B_n$ jest prawdziwe w $\bigcap \alpha$.
 Niech $t_1,\ldots,t_k \in U_L$. Rozważmy $A' \lor \lnot B'_1 \lor \ldots \lor \lnot B'_n$, gdzie $A' = A[{}^{x_1}/_{t_1}, \ldots, {}^{x_k}/_{t_k}]$
@@ -1277,7 +1290,7 @@ Niech $t_1,\ldots,t_k \in U_L$. Rozważmy $A' \lor \lnot B'_1 \lor \ldots \lor \
 \end{theorem}
 
 \subsubsection{Konstrukcja modelu minimalnego}
-Niech $\alpha$ - rodzina wszystkich modeli Herbranta dla programu $P$. Zauważmy, że $\alpha \neq \emptyset$, ponieważ należy tam model
+Niech $\alpha$ -- rodzina wszystkich modeli Herbranda dla programu $P$. Zauważmy, że $\alpha \neq \emptyset$, ponieważ należy tam model
 ($U_L, B_L$). Niech $M_p = \bigcap \alpha$ - model kanoniczny programu $P$.
 
 \begin{theorem}
@@ -1287,18 +1300,18 @@ Następujące warunki są sobie równoważne:
 \begin{enumerate}
   \item $A$ jest konsekwencją $P$
   \item $P \cup \lbrace \lnot A \rbrace$ jest niespełnialny
-  \item $P \cup \lbrace \lnot A \rbrace$ nie ma modelu Herbranta
-  \item $\lnot A$ jest fałszywe w każdym modelu Herbranta dla programu $P$
-  \item $A$ jest prawdziwe w każdym modelu Herbranta dla programu $P$
-  \item $A \in I$ dla każdego $I$, będącego modelem Herbranta dla programu $P$
+  \item $P \cup \lbrace \lnot A \rbrace$ nie ma modelu Herbranda
+  \item $\lnot A$ jest fałszywe w każdym modelu Herbranda dla programu $P$
+  \item $A$ jest prawdziwe w każdym modelu Herbranda dla programu $P$
+  \item $A \in I$ dla każdego $I$, będącego modelem Herbranda dla programu $P$
   \item $A \in \bigcap I = M_p$
 \end{enumerate}
 \end{proof}
 \end{theorem}
 
 \begin{definition}
-Niech ($S, \leq$) - częściowy porządek. $a$ jest \emph{ograniczeniem górnym} dla $X \subset S$, gdy $\forall x \in X : x \leq a$.
-$a$ jest \emph{supermum} dla $X$, gdy jest najmniejszym ograniczeniem górnym $X$. Oznaczenie: $\sqcup X = a$ - $a$ jest supremum dla $X$.
+Niech ($S, \leq$) -- częściowy porządek. $a$ jest \emph{ograniczeniem górnym} dla $X \subset S$, gdy $\forall x \in X : x \leq a$.
+$a$ jest \emph{supremum} dla $X$, gdy jest najmniejszym ograniczeniem górnym $X$. Oznaczenie: $\sqcup X = a$ -- $a$ jest supremum dla $X$.
 Analogicznie definiujemy ograniczenie dolne i infimum dla zbioru $X$, które oznaczamy $\sqcap X$.
 \end{definition}
 
@@ -1312,7 +1325,7 @@ $(P(L), \subset)$, gdzie $\sqcup = \bigcup$ oraz $\sqcap = \bigcap$.
 \end{example}
 
 \begin{definition}
-$L$ - krata zupełna, to $T : L \to L$ jest \emph{monotoniczna}, gdy $x \leq y$ to $T(x) \leq T(y)$.
+$L$ -- krata zupełna, to $T : L \to L$ jest \emph{monotoniczna}, gdy $x \leq y$ to $T(x) \leq T(y)$.
 \end{definition}
 
 \begin{definition}
@@ -1324,9 +1337,9 @@ $T : L \to L$ jest ciągła, gdy $T(\sqcup X) = \sqcup T(X)$ dla wszystkich $X$ 
 \end{definition}
 
 \begin{lemma}
-$T$ - ciagła, to $T$ - monotoniczna.
+$T$ -- ciągła, to $T$ -- monotoniczna.
 \begin{proof}
-Niech $x \leq y$, $X = \lbrace x, y \rbrace$ - skierowane.
+Niech $x \leq y$, $X = \lbrace x, y \rbrace$ -- skierowane.
 $T(\sqcup \lbrace x, y \rbrace) = T(y) = \sqcup \lbrace T(x), T(y) \rbrace$, zatem $T(x) \leq T(y)$.
 \end{proof}
 \end{lemma}
@@ -1337,7 +1350,7 @@ $T : L \to L$ ma punkt stały gdy istnieje $a$, że $T(a) = a$. Będziemy oznacz
 \end{definition}
 
 \begin{theorem}[Knaster, Tarski]
-$L$ - krata zupełna, $T : L \to L$ - monotoniczna, to $lfp(T)$ i $gfp(T)$ istnieją oraz dodatkowo:
+$L$ -- krata zupełna, $T : L \to L$ -- monotoniczna, to $lfp(T)$ i $gfp(T)$ istnieją oraz dodatkowo:
 \[ lfp(T) = \sqcap \lbrace x \in L : T(x) = x \rbrace = \sqcap \lbrace x \in L : T(x) \leq x \rbrace \]
 \[ gfp(T) = \sqcup \lbrace x \in L : T(x) = x \rbrace = \sqcup \lbrace x \in L : T(x) \geq x \rbrace \]
 
@@ -1363,4 +1376,5 @@ $\alpha$ jest następnikiem, bądź jest graniczna. W przypadku następnika iter
 W przypadku liczby granicznej nie będącej zerem, iteracja wygląda następująco:
 \[ \forall \beta < \alpha : T \uparrow \beta \text{ - zdefiniowane} \]
 \[ T \uparrow \alpha = \sqcup \lbrace T \uparrow \beta : \beta < \alpha \rbrace \]
+
 \end{document}
