@@ -1366,7 +1366,41 @@ $g \in G' = \lbrace x \in L : T(x) = x \rbrace$. Niech $g' = \sqcup G'$. Łatwo 
 \end{proof}
 \end{theorem}
 
+\begin{lemma}
+$T: L \to L$ -- monotoniczna. Jeśli $a \leq T(a)$ to istnieje punkt stały 
+$a'$ taki, że $a' \geq a$. Analogicznie, jeśli $a \geq T(a)$ to istnieje punkt 
+stały $a' \leq a$.
+\begin{proof}
+ Natychmiastowo z twierdzenia Knastra-Tarskiego.
+\end{proof}
+\end{lemma}
+
+\subsubsection{Zasada indukcji pozaskończonej}
+\begin{definition}
+ Liczba porządkowa $\alpha$ to zbiór spełniający: 
+ \begin{enumerate}
+  \item $\forall x,y \in \alpha : x \in y \lor y \in x \lor x = y$
+  \item $\forall x \in \alpha : x \subset \alpha$
+ \end{enumerate}
+\end{definition}
+
+Każda liczba porządkowa ma następnik $(a+1) = a \cup \lbrace a \rbrace$. 
+Nie każda jest następnikiem. Liczby porządkowe dzielimy więc na:
+\begin{itemize}
+ \item następniki 
+ \item liczby graniczne.
+\end{itemize}
+
+
+Niech $P(\alpha)$ oznacza, że pewna własność $P$ zachodzi dla liczby 
+porządkowej $\alpha$. \\
+Zasada indukcji pozaskończonej mówi że jeśli 
+$$(\forall \beta < \alpha : P(\beta)) \impl P(\alpha)$$ to 
+$$\forall \alpha : P(\alpha)$$
+
+
 \subsubsection{Iteracja pozaskończona}
+
 Określimy $T \uparrow \alpha$, dla dowolnej liczby porządkowej $\alpha$.
 \begin{definition}
 $\alpha$ jest następnikiem, bądź jest graniczna. W przypadku następnika iteracja wygląda następująco:
@@ -1376,5 +1410,111 @@ $\alpha$ jest następnikiem, bądź jest graniczna. W przypadku następnika iter
 W przypadku liczby granicznej nie będącej zerem, iteracja wygląda następująco:
 \[ \forall \beta < \alpha : T \uparrow \beta \text{ - zdefiniowane} \]
 \[ T \uparrow \alpha = \sqcup \lbrace T \uparrow \beta : \beta < \alpha \rbrace \]
+
+\begin{lemma}
+ $ T \uparrow \alpha \leq lfp(T)$
+\begin{proof}
+ Będziemy korzystać z zasady indukcji pozaskończonej. Rozpatrzmy dwa przypadki:
+ \begin{enumerate}
+  \item $\alpha$ jest następnikiem -- $\alpha' + 1 = \alpha$. 
+	Wtedy $T \uparrow \alpha' \leq lfp(T)$.\\
+	$T(T \uparrow \alpha') = T \uparrow \alpha \leq T(lfp(T)) = lfp(T)$
+  \item $\alpha$ jest liczbą graniczną. Wtedy $T \uparrow \alpha = 
+	\sqcup \lbrace T \uparrow \beta : \beta < \alpha \rbrace$.
+	$lfp(T)$ jest wspólnym ograniczeniem górnym zbioru 
+	$\lbrace T \uparrow \beta : \beta < \alpha \rbrace$, z definicji supremum 
+	jest ono nie większe od tego ograniczenia.
+ \end{enumerate}
+\end{proof}
+\end{lemma}
+
+\begin{lemma}
+ $T(\sqcup X) \geq \sqcup \overrightarrow{T}(X)$
+ \begin{proof}
+ $\forall a \in X: T(a) \leq T(\sqcup X)$, więc $T(\sqcup X)$ jest górnym ograniczeniem $T(a), a \in X$.
+ \end{proof}
+\end{lemma}
+
+
+\begin{lemma}
+ $ T \uparrow \alpha \leq T \uparrow (\alpha + 1)$
+\begin{proof}
+ Założenie indukcyjne $ T \uparrow \beta \leq T \uparrow (\beta + 1)$ dla $\beta < \alpha$. Rozpatrzmy dwa przypadki:
+ \begin{enumerate}
+  \item $\alpha$ jest następnikiem -- $\alpha' + 1 = \alpha$. Trywialnie z monotoniczności.
+  \item $\alpha$ jest liczbą graniczną. Używając lematu powyżej możemy napisać ciąg nierówności: \\
+  $ T \uparrow \alpha = \sqcup \lbrace T \uparrow \beta : \beta < \alpha \rbrace \leq 
+    \sqcup \lbrace  T(T \uparrow \beta) : \beta < \alpha \rbrace \leq
+    T(\sqcup \lbrace  T \uparrow \beta : \beta < \alpha \rbrace) $
+ \end{enumerate}
+\end{proof}
+\end{lemma}
+
+\begin{lemma}
+ Jeśli $\alpha < \beta$ to $T \uparrow \alpha \leq T \uparrow \beta$.
+ \begin{proof}
+  Indukcyjnie ze względu na $\beta$.\\
+  Założenie: $\alpha_0 < \gamma \impl T \uparrow \alpha_0 \leq T \uparrow \gamma$ dla $\gamma < \beta$.
+  Jak zwykle rozważamy dwa przypadki:
+  \begin{enumerate}
+  \item $\beta' + 1 = \beta$. Wynika od razu z poprzedniego lematu.
+  \item $\beta$ jest graniczna. Wtedy $T \uparrow \beta = \sqcup \lbrace
+	 T \uparrow \gamma : \gamma < \beta \rbrace$. Natychmiastowo mamy to co chcemy, 
+	 bo $\alpha_0 < \beta$.
+ \end{enumerate}
+ \end{proof}
+\end{lemma}
+
+\begin{lemma}
+ Jeśli $\alpha < \beta \land T \uparrow \alpha = T \uparrow \beta$ to $T \uparrow \alpha = lfp(T)$.
+ \begin{proof}
+  $T \uparrow \alpha \leq T \uparrow (\alpha + 1) \leq T \uparrow \beta$, bo skoro $\alpha < \beta$, to 
+  $\alpha \leq \alpha +1 \leq \beta$. Wiemy, że $T \uparrow \alpha = T \uparrow \beta$, więc wszystkie trzy 
+  wartości są równe, czyli $T \uparrow \alpha$ jest punktem stałym. Z jednego z poprzednich lematów wynika, że 
+  musi być najmniejszym.
+ \end{proof}
+\end{lemma}
+
+\begin{lemma}
+ $\exists \beta : \forall \gamma \geq \beta : T \uparrow \gamma = lfp(T)$
+ \begin{proof}
+  Dla funkcji $h : \alpha \to L$ i odpowiednio dużego $\alpha$ (np. $2^L$), $h$ na pewno nie jest iniekcją. 
+  
+  Niech więc $h : \alpha \to L$, t. że $h(\beta) = T \uparrow \beta$. $\alpha$ jest liczbą porządkową odpowiadającą
+  $2^L$ (z twierdzenia Zermello wiemy, że każdy zbiór da się dobrze uporządkować). Funkcja ta nie jest iniekcja, więc 
+  $\exists \gamma < \delta : h(\gamma) = h(\delta)$. Z poprzedniego lematu: $h(\gamma) = lfp(T)$.
+ \end{proof}
+\end{lemma}
+Powyższy lemat mówi nam mniej więcej tyle, że kiedyś uda nam się przy pomocy iteracji w górę dojść do 
+najmniejszego punktu stałego.
+
+\begin{lemma}
+ $T: L \to L$ i $T$ jest ciągła, to $T \uparrow \omega = lfp(T)$.
+ \begin{proof}
+  Prosta obserwacja: $\lbrace T \uparrow n : n < \omega \rbrace$ jest skierowany. 
+  Gdy weźmiemy dowolny podzbiór skończony i $T \uparrow n$ dla największego $n$, 
+  to ono jest supremum tego podzbioru.   
+  
+  $T(A) = T(\sqcup \lbrace T \uparrow n : n < \omega \rbrace)$. Z ciągłości mamy, że 
+  $T(A) = \sqcup \lbrace T \uparrow (n+1) : n < \omega \rbrace = B$. Ale $A = B$, bo 
+  ze zbioru, po którym bierzemy supremum usuwamy tylko $\bot$, czyli $A$ jest 
+  punktem stałym dla $T$. $A = \sqcup \lbrace T \uparrow n : n < \omega \rbrace = T \uparrow \omega$, więc 
+  $lfp(T) = T \uparrow \omega$.
+ \end{proof}
+\end{lemma}
+
+\begin{definition}
+ $P$ - program, $U_p$ - uniwersum (termy stałe), $B_p$ - baza Herbranda dla $P$.   
+ 
+ Rozważamy kratę $(2^{B_P}), \subset), \bot = \emptyset, \top = B_p, \sqcap = \cap, \sqcup = \cup$ 
+ Definiujemy $T_P : 2^{B_P} \to 2^{B_P}$ następująco:  
+ 
+ $T_P(I)$ dla $I \subset B_P$ jest zbiorem takich $A' \in B_P$, dla których istnieje 
+ instrukcja $A \leftarrow B_1, ... B_n$ i $A' \leftarrow B_1' ... B_n'$ jest instancją stałą
+ $A \leftarrow B_1, ... B_n$ taką, że $\lbrace B_1', ... B_n'\rbrace \subset I$.
+ 
+
+\end{definition}
+
 
 \end{document}
