@@ -89,7 +89,7 @@ Taki $Y$ nazywamy \emph{konsekwencją} $X$. ($Cn: 2^S \ni X \mapsto Y \in 2^S$)
   \item Jeśli $X \subset Y$, to $Cn(X) \subset Cn(Y)$.
   \item $Cn(Cn(X)) = Cn(X)$.
   \item $Cn(X) = \bigcup\{
-    Cn(Y) : Y \subset X \text{ i } X \text{ jest skończony}
+    Cn(Y) : Y \subset X \text{ i } Y \text{ jest skończony}
   \}$.
     \begin{proof}
       $\supset$ -- trywialny. $\subset$ -- Wystarczy pokazać, że prawa strona
@@ -1206,30 +1206,30 @@ $\exists v~\text{ADD}(s(0), v, s(s(0)))$.
   Załóżmy, że $\lbrace C_1, C_2, G' \rbrace$ jest spełnialny.
 
 \begin{center}
-\begin{tikzpicture}[grow=up, level 1/.style={sibling distance=30mm},
-  level distance=20mm]
-  \node{$\square$}  
-    child {
-      node {$C_1$}
-      edge from parent 
-      node[right]{$x := s(0)$}
-    }
-    child {
-      node {$\lnot\text{ADD}(0,y,s(0))$}
-      child {
-        node {$\lnot G'$}
-        edge from parent 
-        node[right]{$v := y$}
-      }
-      child {
-        node {$\lnot C_2$}
-        edge from parent 
-        node[left, align=center]{$x := 0$,\\$z := s(0)$}
-      }
-      edge from parent 
-      node[left]{$y := s(0)$}
-    };
-\end{tikzpicture}
+%\begin{tikzpicture}[grow=up, level 1/.style={sibling distance=30mm},
+%  level distance=20mm]
+%  \node{$\square$}  
+%    child {
+%      node {$C_1$}
+%      edge from parent 
+%      node[right]{$x := s(0)$}
+%    }
+%    child {
+%      node {$\lnot\text{ADD}(0,y,s(0))$}
+%      child {
+%        node {$\lnot G'$}
+%        edge from parent 
+%        node[right]{$v := y$}
+%      }
+%      child {
+%        node {$\lnot C_2$}
+%        edge from parent 
+%        node[left, align=center]{$x := 0$,\\$z := s(0)$}
+%      }
+%      edge from parent 
+%      node[left]{$y := s(0)$}
+%    };
+%\end{tikzpicture}
 \end{center}
 \end{proof}
 
@@ -1516,5 +1516,129 @@ najmniejszego punktu stałego.
 
 \end{definition}
 
+% 4 czerwca
+
+\begin{lemma}
+Istnieje liczba porządkowa $\gamma$, że: $\forall_{\beta\geq\gamma} T \uparrow\beta = lfp(T)$\\
+Istnieje liczba porządkowa $\gamma$, że: $\forall_{\beta\geq\gamma} T \downarrow\beta = gfp(T)$
+\end{lemma}
+
+\begin{theorem}
+Gdy $T$ - ciągła to $lfp(T) = T \uparrow \omega$
+\end{theorem}
+
+\subsubsection{Zastosowania twierdzenia Knastera - Tarskiego w logice}
+$P$ - program. $U_L$ - uniwersum Herbranda dla  $L$.\\
+$B_L$ - baza Herbranda dla $L$. (przeliczalny)\\
+$2^{B_L}$ - podzbiory $B_L$ (kontinuum)\\
+$2^{B_L}$ - krata zupełna. $\sqcup$ - $\sup$ to jest $\bigcup$, $\sqcap$ - $\inf$ to jest $\bigcap$.\\
+\begin{definition}
+  $T_P : 2^{B_L} \rightarrow 2^{B_L}$
+  $T_P(I) = \{A'\in B_L :
+    \text{istnieje instrukcja } A\leftarrow B_1, \ldots, B_n \text{programu } P \\
+  \text{i instancja stała (tej instrukcji) } A'\leftarrow B_1', \ldots, B_n', \text{ gdzie} \\
+  \{B_1', \ldots, B_n' \} \in I \}$
+
+\end{definition}
+\header{Obserwacja.} $T_P$ jest monotoniczna.\\
+\begin{lemma}
+$P$ - program. $T_P : 2^{B_L} \rightarrow 2^{B_L}$ - funkcja monotoniczna\\
+Niech $X \subset 2^{B_L}$ będzie skierowaną rodziną interpretacji Herbranda.\\
+($X \subset L$ jest skierowany, gdy dla $x_1, x_2 \in X, \exists_{x_3\in X} x_3 \geq x_1 \wedge x_3 \geq x_1$)\\
+$\{A_1, \ldots, A_n\} \subset \bigcup_{I\in X} I \iff \{A_1, \ldots, A_n \} \subset I$ dla pewnego $I\in X$.
+\end{lemma}
+
+\begin{theorem}
+  $T_P : 2^{B_L} \rightarrow 2^{B_L}$ jest ciągłe
+\end{theorem}
+Sprawdzić czy $T_p(\bigcup_{I\in X} I) = \bigcup_{I\in X}T_p(I)$ dla $X$ - skierowanego.\\
+$\supset$ tak jest zawsze, bo monotoniczna.\\
+$\subset$
+\begin{enumerate}
+\item $A' \in T_p(\bigcup_{I\in X} I)$
+\item $A' \leftarrow B_1', \ldots, B_n' - instrukcja stała (A \leftarrow B_1, \ldots, B_n) \in P \{B_1', \ldots, B_n' \} \subset \bigcup_{I\in X} I$
+\item $A' \leftarrow B_1', \ldots, B_n'$ - instrukcja stała $(A \leftarrow B_1, \ldots, B_n) \in P \{B_1', \ldots, B_n' \} \subset I$ (z poprzedniego lematu)
+\item $A' \in T_P(I), I\in X$
+\item $A' \in \bigcup T_P(I)$
+\end{enumerate}
+
+\begin{theorem}
+$I\in 2^{B_L}$ jest modelem dla $P$ wtw $T_P(I) \subset I$\\
+\textit{$I$ jest modelem dla $P$:}
+\begin{itemize}
+\item \textit{tzn. $I$ jest modelem dla każdej instrukcji $(A\leftarrow B_1, \ldots, B_n) \in P$}
+\item \textit{tzn. $I$ jest takie, że $A' \leftarrow B_1', \ldots, B_n'$ jest prawdziwa w $I$ }
+\end{itemize}
+\end{theorem}
+
+$\Rightarrow$ Niech $A' \in T_P(I), A' \leftarrow B_1', \ldots, B_n'$ instancja stała, jest taka, że $\{B_1', \ldots, B_n'\} \subset I$, a $I$ jest modelem, $A' \leftarrow B_1', \ldots, B_n'$  jest prawdziwa w $I$, więc $A' \in I$
+
+$\Leftarrow$ Niech $A \leftarrow B_1, \ldots B_n instrukcja, A' \leftarrow B_1', \ldots, B_n'$ instrukcja stała.\\
+NIech $\{B_1', \ldots, B_n' \} \subset I, to {A'} \subset T_P(I) \subset I \implies A'\in I$. Czyli $I$ jest modelem.
+
+\begin{theorem}[Kowalski, van Emden]
+$M_P = lfp(T_P) = T_P\uparrow\omega$
+\end{theorem}
+
+\begin{proof}
+$M_P = \bigcap \{ I : I jest modelem dla P \}$\\
+$M_P = \bigcap \{ I \in 2^{B_L} : T_P(I) \subset I\} = \sqcup \{ I : T_P(I) \leq I\} = lfp(T_P) = T_P\uparrow\omega$
+\end{proof}
+
+\section{Rezolucja zdaniowa (Robinsona)}
+\begin{enumerate}
+\item Formaty za spójnikami $\vee$, $\wedge$, $\neg$, zmienna zdaniowa.
+\item Wartościowanie
+\item Tautologia i spełnialność
+\item Formuły mają postać normalną w postaci koniunkcji klauzul.
+\item Operacje na klauzulach (rezolwenta)
+\end{enumerate}
+$$C = L \vee P_1\vee \ldots \vee P_n$$
+$$C' = \neg L \vee R_1\vee \ldots \vee R_n$$
+rezolwenta to $P_1\vee \ldots \vee P_n \vee R_1\vee \ldots \vee R_n$
+
+\header{Fakt.} $R \in C_n^M(C,C'))$ (konsekwencja matrycowa)\\
+Niech $f$ wartościowanie, $f : \text{zmienna} \rightarrow \{0, 1\}$.\\
+$f(C)=1$, gdy $f(L) = 1$ lub $\exists_{1\leq i \leq n} f(P_i) = 1$\\
+$f(C')=1$, gdy $f(C') = 1$ lub $\exists_{1\leq j \leq k} f(P_k) = 1$\\
+\textbf{tu powyrzej jest coś grubo nie tak}\\
+$\left.
+\begin{array}{l}
+f(L) = 1 \implies \exists_{1\leq j\leq k} f(R_j) = 1\\
+f(\neg L) = 1 \implies \exists_{1\leq i\leq n} f(P_i) = 1
+\end{array}
+\right\} P(R) = 1$
+
+\begin{definition}
+Dowodem klauzuli $C$ ze zbioru klauzul $S$ jest ciąg klauzul $C_1, \ldots, C_p = C$, takie że dla każdego $C_i \in S$ lub $C_i$ jest rezolwentą wcześniejszego ciągu.
+\end{definition}
+
+
+\begin{definition}
+Obaleniem zbioru $S$ jest dowód klauzuli.
+\end{definition}
+
+\begin{lemma}
+$x_1, \ldots, x_r, y_1, \ldots, y_s$, $E_{ij} = x_i \vee y_j$\\
+$E_{ij}$ są spełniane przez wartościowanie $f$.\\
+Wtedy $x_1, \ldots, x_r$ jest spełnione przez $f$ lub $y_1, \ldots, y_s$ jest spełnione przez $f$. (trywialne)
+\end{lemma}
+
+
+\begin{definition}
+$S$ jest minimalnym zbiorem klauzul niespełnialnych, kiedy każdy $S' \subsetneq S$ jest już specialny.
+\end{definition}
+
+\header{UWAGA 1} Jak $C \in S$ i $S$ jest minimalnym zbiorem niespełnialnym to w $C$ nie ma sprzecznych literałów.\\
+\header{UWAGA 2} $S$ - minimalny niespełnialny to każda zmienna ma pozytywne i negatywne wystąpienia w $S$.
+
+\begin{theorem}
+$S$ ma obalenie to $S$ niespełnialna.
+\end{theorem}
+$\Rightarrow$ $C_1, \ldots, C_p = \square$, niewprost $f(\square) = true$, sprzeczność.
+$\Leftarrow$ \\
+\begin{theorem}[o ??? metody rezolucji]
+$S$ jest niespełnialne to $S$ można obalić.
+\end{theorem}
 
 \end{document}
