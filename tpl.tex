@@ -1206,30 +1206,30 @@ $\exists v~\text{ADD}(s(0), v, s(s(0)))$.
   Załóżmy, że $\lbrace C_1, C_2, G' \rbrace$ jest spełnialny.
 
 \begin{center}
-%\begin{tikzpicture}[grow=up, level 1/.style={sibling distance=30mm},
-%  level distance=20mm]
-%  \node{$\square$}  
-%    child {
-%      node {$C_1$}
-%      edge from parent 
-%      node[right]{$x := s(0)$}
-%    }
-%    child {
-%      node {$\lnot\text{ADD}(0,y,s(0))$}
-%      child {
-%        node {$\lnot G'$}
-%        edge from parent 
-%        node[right]{$v := y$}
-%      }
-%      child {
-%        node {$\lnot C_2$}
-%        edge from parent 
-%        node[left, align=center]{$x := 0$,\\$z := s(0)$}
-%      }
-%      edge from parent 
-%      node[left]{$y := s(0)$}
-%    };
-%\end{tikzpicture}
+\begin{tikzpicture}[grow=up, level 1/.style={sibling distance=30mm},
+  level distance=20mm]
+  \node{$\square$}  
+    child {
+      node {$C_1$}
+      edge from parent 
+      node[right]{$x := s(0)$}
+    }
+    child {
+      node {$\lnot\text{ADD}(0,y,s(0))$}
+      child {
+        node {$\lnot G'$}
+        edge from parent 
+        node[right]{$v := y$}
+      }
+      child {
+        node {$\lnot C_2$}
+        edge from parent 
+        node[left, align=center]{$x := 0$,\\$z := s(0)$}
+      }
+      edge from parent 
+      node[left]{$y := s(0)$}
+    };
+\end{tikzpicture}
 \end{center}
 \end{proof}
 
