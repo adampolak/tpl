@@ -1615,7 +1615,7 @@ Dowodem klauzuli $C$ ze zbioru klauzul $S$ jest ciąg klauzul $C_1, \ldots, C_p 
 
 
 \begin{definition}
-Obaleniem zbioru $S$ jest dowód klauzuli.
+Obaleniem zbioru $S$ jest dowód klauzuli pustej.
 \end{definition}
 
 \begin{lemma}
@@ -1637,8 +1637,37 @@ $S$ ma obalenie to $S$ niespełnialna.
 \end{theorem}
 $\Rightarrow$ $C_1, \ldots, C_p = \square$, nie wprost $f(\square) = true$, sprzeczność.
 $\Leftarrow$ \\
-\begin{theorem}[o ??? metody rezolucji]
-$S$ jest niespełnialne to $S$ można obalić.
+\begin{theorem}[o pełności metody rezolucji dla logiki zdaniowej]
+Jeśli $S$ jest niespełnialnym zbiorem klauzul to $S$ ma obalenie.
+\begin{proof}
+Niespełnialny zbiór klauzul $S$ najpierw sprowadzamy do minimalnego niespełnialnego zbioru klauzul.
+Następnie dowodzimy przez indukcję ze względu na liczbę zmiennych w $S$.\\
+Baza indukcji: minimalny niespełnialny zbiór klauzul z jedną zmienną to $\{p, \lnot p\}$ - ma on obalenie.\\
+Niech $S$ będzie minimalnym niespełnialnym zbiorem klauzul o $k+1$ zmiennych. Weźmy dowolną zmienną $p$ w nim.\\
+Są $3$ kategorie, na które można podzielić nasze klauzule:
+\begin{enumerate}
+ \item $C_1, \ldots, C_k$ - w których $p$ występuje pozytywnie ($C_i = p \vee C_i'$).
+ \item $D_1, \ldots, D_l$ - w których $p$ występuje negatywnie ($D_i = \lnot p \vee D_i'$).
+ \item $B_1, \ldots, B_m$ - w których $p$ nie występuje.
+\end{enumerate}
+Niech $E_{i,j} = C_i' \vee D_j'$.\\
+Udowodnimy, że $\{E_{i,j}\}_{i\in\{1,\ldots,k\},j\in\{1,\ldots,l\}} \cup \{B_i\}_{i\in\{1,\ldots,m\}}$ jest niespełnialne.\\
+Załóżmy przeciwnie: jest spełnialne przy wartościowaniu $V$.\\
+Wówczas z lematu, który dowodziliśmy wcześniej:
+$$\forall_{i\in\{1,\ldots,k\}} V(C_i') = 1$$
+lub
+$$\forall_{i\in\{1,\ldots,l\}} V(D_i') = 1$$
+i oprócz tego
+$$\forall_{i\in\{1,\ldots,m\}} V(B_i') = 1$$
+Załóżmy, że $C_i'$ są $1$. Wtedy możemy dać $V(p) = 0$ i $D_i$ są $1$, bo zawierają $p$ negatywnie i będziemy mieli
+sprzeczność, bo orginalne $S$ będzie spełnialne.
+Jeśli $D_i'$ są $1$, dowód jest analogiczny.\\
+Ponieważ $\{E_{i,j}\}_{i\in\{1,\ldots,k\},j\in\{1,\ldots,l\}} \cup \{B_i\}_{i\in\{1,\ldots,m\}}$ jest niespełnialne,
+wiemy z założenia indukcyjnego, że posiada obalenie
+$$P_1,\ldots,P_w$$
+Jako obalenie $S$ możemy wziąć teraz
+$$E_{1,1},\ldots,E_{k,l},P_1,\ldots,P_w$$
+\end{proof}
 \end{theorem}
 
 \end{document}
