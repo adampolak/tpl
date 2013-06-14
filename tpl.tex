@@ -1732,6 +1732,73 @@ taka, że $C_v'$ (pewna instancja stała $C_v$) jest falsyfikowalna przez $v$.\\
 Za $S'$ kładziemy zbiór $C_v'$ po wszystkich $v$, które są porażkami. $S'$ jest niespełnialne.\\
 W drugą stronę - bez dowodu.
 \end{proof}
+\begin{definition}
+Faktorem klauzuli $C$ jest klauzula $C'$ taka, że $C' = C \theta$, gdzie $\theta$ jest unifikatorem pewnych literałów.
+\end{definition}
+\begin{example}
+$$C = P(x) \vee P(f(y)) \vee Q(x,y)$$
+$$C' = P(f(z)) \vee Q(f(z),z)$$
+\end{example}
+\begin{definition}
+Niech $C_1$ i $C_2$ będą klauzulami:
+$$C_1 = L_1 \vee C_1'$$
+$$C_2 = \lnot L_2 \vee C_2'$$
+i niech istnieje podstawienie $\theta$ będące MGU (Most General Unifier) dla $L_1$ i $L_2$.
+Wtedy binarną rezolwentą klauzul $C_1$ i $C_2$ jest $(C_1' \theta) \vee (C_2' \theta)$.
+\end{definition}
+\begin{definition}
+ Rezolwentą klauzul $C_1$ i $C_2$ jest każda spośród następujących:
+\begin{itemize}
+ \item binarna resolwenta $C_1$ i $C_2$
+ \item binarna resolwenta $C_1$ i faktora $C_2$
+ \item binarna resolwenta faktora $C_1$ i $C_2$
+ \item binarna resolwenta faktora $C_1$ i faktora $C_2$
+\end{itemize}
+\end{definition}
+\begin{definition}
+ Dowodem rezolucyjnym ze zbioru klauzul $S$ nazywamy ciąg klauzul $C_1, \ldots, C_n = \square$
+taki, że dla każdego $i$, $C_i \in S$ lub $C_i$ jest rezolwentą $C_k$ i $C_j$ dla $k,j<i$
+\end{definition}
+\begin{theorem}
+ $S$ ma rezolucyjny dowód wtw. $S$ jest niespełnialny.
+\end{theorem}
+\begin{proof}
+ W przód dowód jest trywialny. W tył - twierdzenie o pełności rezolucji.
+\end{proof}
+\begin{lemma}[o podnoszeniu]
+Prawdę mówiąc nie zrozumiałem, o co w tym lemacie chodzi.
+Nie wydaje mi się, że pisał do tego lematu cokolwiek poza rysunkiem,
+który przytaczam w całości. Wydaje mi się, że to była dygresja.\\
+\centering \includegraphics[width=0.3\textwidth]{img/resolv}
+\end{lemma}
+\begin{definition}
+Formuła jest w postaci PRENEX, gdy ma postać $(Q_1 x_1)(Q_2 x_2)\ldots(Q_n x_n)M$,
+gdzie $Q_1, \ldots, Q_n$ to kwantyfikatory. (Wszystkie kwantyfikatory są na zewnątrz.)
+\end{definition}
+\begin{proof}
+Każda formuła da się sprowadzić do PRENEX (dowód (podobno) trywialny).
+\end{proof}
+\begin{definition}
+Forma SKOLEMA - forma PRENEX, w której nie ma kwantyfikatorów egzystencjalnych.
+\end{definition}
+Przekształcanie formuły w formie PRENEX do formy SKOLEMA przebiega następująco.
+
+\begin{itemize}
+ \item Jeśli formuła jest w postaci:
+$$\exists_y (Q_1 x_1)(Q_2 x_2)\ldots(Q_n x_n)M$$
+to przekształcamy ją do
+$$(Q_1 x_1)(Q_2 x_2)\ldots(Q_n x_n)M[y:=a]$$
+gdzie $a$ jest nową stałą.
+\item Jeśli formuła jest w postaci:
+$$\forall_{x_1} \ldots \forall_{x_k} \exists_y (Q_1 z_1)(Q_2 z_2)\ldots(Q_n z_n)M$$
+to przekształcamy ją do
+$$\forall_{x_1} \ldots \forall_{x_k} (Q_1 z_1)(Q_2 z_2)\ldots(Q_n z_n)M[y:=f(x_1,\ldots,x_k)]$$
+gdzie $f$ jest nowym symbolem funkcyjnym.
+\end{itemize}
+Gdy orginalna formuła jest spełniona w jakimś modelu, to nowa formuła jest spełniona w jakimś (być może innym) modelu.
+
+
+
 
 \end{document}
 
