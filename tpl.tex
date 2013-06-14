@@ -1797,7 +1797,55 @@ gdzie $f$ jest nowym symbolem funkcyjnym.
 \end{itemize}
 Gdy orginalna formuła jest spełniona w jakimś modelu, to nowa formuła jest spełniona w jakimś (być może innym) modelu.
 
-
+\begin{definition}
+ Metoda rezolucji Robinsona\\
+Wejście: $\phi$ - formuła.\\
+Wyjście: czy $\phi$ jest tautologią.\\
+Kroki:
+\begin{enumerate}
+ \item Budujemy $\lnot \phi$.
+ \item Znajdujemy formę SKOLEMA dla $\lnot \phi$.
+ \item Dowodzimy, czy te klauzule są spełnialne.
+\end{enumerate}
+\end{definition}
+\begin{example}
+ Formuła: $\phi = \exists_x \forall_y p(x,y) \to \forall_y \exists_x p(x,y)$\\
+Jej negacja ma postać:
+$$\lnot \phi = \exists_x \forall_y p(x,y) \wedge \exists_y \forall_x \lnot p(x,y)$$
+To nam się rozbija na dwie klauzule.
+$$C_1 = \exists_x \forall_y p(x,y)$$
+$$C_2 = \exists_y \forall_x \lnot p(x,y)$$
+$C_1$ skolemizuje się do $p(a, y)$, a $C_2$ skolemizuje się do $\lnot p(x, b)$.
+Dalej jest prosto.
+\end{example}
+\begin{example}
+$p(x)$ - $x$ golibrodą\\
+$g(x,y)$ - $x$ goli $y$\\
+$$\phi = (\forall_x (p(x) \to \forall_y(g(x,y) \leftrightarrow \lnot g(y,y)))) \to \lnot \exists_x p(x)$$
+Rezolucja:
+$$\lnot \phi = (\forall_x (p(x) \to \forall_y(g(x,y) \leftrightarrow \lnot g(y,y)))) \wedge \exists_x p(x)$$
+Rozpada się to na klauzule (po skolemizacji):
+$$C_1 = \lnot p(x) \vee \lnot g(x,y) \vee \lnot g(y,y)$$
+$$C_2 = \lnot p(x) \vee \lnot g(y,y) \vee \lnot g(x,y)$$
+$$C_3 = p(a)$$
+Rezolwujemy faktor $C_1$ ($\lnot p(z) \vee \lnot g(z,z)$) i faktor $C_2$ ($\lnot p(q) \vee g(q,q)$):
+$$C_4 = \lnot p(u)$$
+Rozolucja z $$C_3$$ daje nam ostateczne rozwiązanie.
+\end{example}
+\begin{example}
+Formuła: $\phi = p(0) \wedge (p(x) \to p(s(x))) \to \forall_x p(x)$.
+$$\lnot \phi = p(0) \wedge (p(x) \to p(s(x))) \wedge \exists_x \lnot p(x)$$
+Rozpada się to na:
+$$C_1 = p(0)$$
+$$C_2 = ~p(x) \vee p(s(x))$$
+$$C_3 = ~p(a)$$
+Teraz jednak procedura rezolucji się nie kończy - buduje się kontrprzykład.\\
+Rezolucja $C_1$ z $C_2$:
+$$C_4 = p(s(0))$$
+Rezolucja $C_4$ z $C_2$:
+$$C_5 = p(s(s(0)))$$
+i tak dalej, for all eternity.
+\end{example}
 
 
 \end{document}
