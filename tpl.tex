@@ -1639,6 +1639,7 @@ $\Rightarrow$ $C_1, \ldots, C_p = \square$, nie wprost $f(\square) = true$, sprz
 $\Leftarrow$ \\
 \begin{theorem}[o pełności metody rezolucji dla logiki zdaniowej]
 Jeśli $S$ jest niespełnialnym zbiorem klauzul to $S$ ma obalenie.
+\end{theorem}
 \begin{proof}
 Niespełnialny zbiór klauzul $S$ najpierw sprowadzamy do minimalnego niespełnialnego zbioru klauzul.
 Następnie dowodzimy przez indukcję ze względu na liczbę zmiennych w $S$.\\
@@ -1668,6 +1669,69 @@ $$P_1,\ldots,P_w$$
 Jako obalenie $S$ możemy wziąć teraz
 $$E_{1,1},\ldots,E_{k,l},P_1,\ldots,P_w$$
 \end{proof}
+\begin{remark}
+Ta procedura pokazuje sprowadzenie $kSAT$ do $3SAT$. Każdą klauzulę $a_1 \vee \ldots \vee a_n$
+rozdzielając w miejscu $k$ i dodając nową zmienną $p$. Otrzymujemy teraz dwie mniejsze klauzule
+$a_1 \vee \ldots \vee a_k \vee p$ i $a_{k+1} \vee \ldots \vee a_n \vee \lnot p$.
+Powtarzając tę procedurę póki możemy otrzymamy instancję problemu $3SAT$.
+Niestety, klauzule $3SAT$u już nie są rozszerzalne w ten sposób.
+\end{remark}
+\section{Drzewa semantyczne}
+Niech $L$ będzie językiem pierwszego rzędu, zaś $S$ zbiorem klauzul pierwszego rzędu.\\
+$U_L$ - uniwersum Herbranda dla $L$, $B_L = \{B_0,\ldots,B_1\}$ - baza Herbranda dla $L$.
+\begin{definition}
+Drzewo semantyczne dla $S$ to drzewo binarne etykietowane (na krawędziach) elementami z $B_L$.
+Na poziomie $n$-tym wszystkie etykiety są albo $B_k$ albo $\lnot B_k$ dla pewnego $k$ zależnego od $n$.
+\end{definition}
+\begin{definition}
+Częściowa interpretacja Herbranda wierzchołka $v$ to skończony zbiór etykiet na krawędziach od $v$ do korzenia.
+Oznaczamy ją $I(v)$.
+\end{definition}
+\begin{definition}
+Mówimy, że $I(v)$ falsyfikuje klauzulę $C = L_1 \vee \ldots \vee L_r$ ze zbioru $S$ gdy istnieje instancja stała $C' = L_1' \vee \ldots \vee L_r'$
+taka, że dla każdego $i$, $\lnot L_i \in I(v)$.
+\end{definition}
+\centering \includegraphics[width=0.3\textwidth]{img/drzewosemantyczne}
+\begin{definition}
+Węzeł $v$ jest porażką, gdy $I(v)$ falsyfikuje klauzulę z $S$.
+\end{definition}
+\begin{definition}
+Drzewo semantyczne jest domknięte, gdy na każdej gałęzi jest porażka.
+\end{definition}
+\begin{example}
+\begin{itemize}
+Niech $S$ składa się z klauzul:
+ \item $C_1 = P(x)$ (tłumaczenie: $\forall_x P(x)$
+ \item $C_2 = P(x) \to Q(f(x))$ (tłumaczenie: $\forall_x \lnot P(x) \vee Q(f(x))$
+ \item $C_3 = \lnot Q(f(a))$ (tłumaczenie: $\lnot Q(f(a))$
+\end{itemize}
+Baza Herbranda: $B_L = \{P(a), P(f(a)), \ldots\} \cup \{Q(a), Q(f(a)), \ldots\}$.\\
+\centering \includegraphics[width=0.3\textwidth]{img/drzewosemantyczne2}
+\end{example}
+\begin{remark}
+ Domkniętość nie zależy od numeracji.
+\end{remark}
+\begin{theorem}[Herbranda]
+ Zbiór $S$ klauzul jest niespełnialny wtw. drzewo semantyczne dla $S$ jest domknięte.
 \end{theorem}
+\begin{proof}
+ Dowód niewprost: załóżmy, że istnieje drzewo niedomknięte dla niespełnialnego zbioru klauzul $S$.
+Niech $G$ będzie gałęzią bez porażki.
+Budujemy teraz interpretację Herbranda: $I = \{B_L \cap G\}$ model Herbranda dla S, sprzeczność.\\
+W drugą stronę: załóżmy, że $S$ spełnialne. Z twierdzenia: istnieje model dla $S$ implikuje,
+że istnieje model Herbranda($I$). Budujemy $G$ z $I$ i wszystkich $B \in B_L$ takich,
+że $\lnot B$ nie należy do $I$. $G$ jest bez porażki.
+\end{proof}
+\begin{lemma}
+ $S$ jest niespełnialny wtw. istnieje $S'$ - zbiór stałych instancji klauzul będących w $S$,
+który jest niespełnialny.
+\end{lemma}
+\begin{proof}
+ Każde drzewo semantyczne dla S jest domknięte. Weźmy porażkę $v$. Dla niej istnieje klauzula $C_v$
+taka, że $C_v'$ (pewna instancja stała $C_v$) jest falsyfikowalna przez $v$.\\
+Za $S'$ kładziemy zbiór $C_v'$ po wszystkich $v$, które są porażkami. $S'$ jest niespełnialne.\\
+W drugą stronę - bez dowodu.
+\end{proof}
 
 \end{document}
+
