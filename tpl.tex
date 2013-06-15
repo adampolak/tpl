@@ -906,14 +906,11 @@ Szukamy dowodów (w postaci termu $\lambda$) dla formuł:
     \begin{align*}
       &\lambda x_{(A \impl B) \impl A}. \square_{A} \\
       &\lambda x_{(A \impl B) \impl A}. x \square_{A\impl B} \\
-      &\lambda x_{(A \impl B) \impl A}. x(\lambda y_{A\impl B}. \square_{A} ) \\
-      &\lambda x_{(A \impl B) \impl A}. x(\lambda y_{A\impl B}. y
-      (\lambda z_{A}. \square_{B})) \\
+      &\lambda x_{(A \impl B) \impl A}. x(\lambda y_{A}. \square_{B}) \\
     \end{align*}
     Nie mamy czego wpisać w~ostatni kwadracik: nie da się uzyskać zmiennej typu
-    $B$ (podobnie jak nie ma skąd wziąć zmiennej typu $A$, żeby użyć jej
-    w~przedostatniej linijce). Wynika to z~tego, że prawa Pierce'a nie da się
-    udowodnić w~logice intuicjonistycznej.
+    $B$. Problem wynika z~tego, że prawa Pierce'a nie da się udowodnić w~logice
+    intuicjonistycznej -- nie ma termu o~takim typie.
 \end{itemize}
 \subsubsection{Rachunek $\lambda$ bez typów}
 Dany jest domknięty term $\lambda$-rachunku M.\\
