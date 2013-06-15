@@ -699,7 +699,7 @@ Możemy w ten sposób zejść do zbioru pustego.
 \end{proof}
 
 \begin{definition}
-$X \subset S$ jest spełnialny, gdy istnieje $f$: $w^f(X) \subset {1}$
+$X \subset S$ jest spełnialny, gdy istnieje $f$: $w^f(X) \subset \{1\}$
 \end{definition}
 
 \begin{lemma}
@@ -719,7 +719,7 @@ $\neg A \in Cn^M(X)$ wtedy i tylko wtedy, gdy $X \cup \{A\}$ jest niespełnialny
 \begin{proof}
 	~\begin{description}
 		\item[$\Rightarrow$] z definicji $Cn^M$
-		\item[$\Leftarrow$] Niech $f$ będzie takie, że $w^f(X) \subset{1}$.
+		\item[$\Leftarrow$] Niech $f$ będzie takie, że $w^f(X) \subset\{1\}$.
 		Pokażmy, że $w^f(\neg A) = 1$
 		Gdyby $w^f(A) = 1$, to $X \cup \{A\}$ byłoby spełnialne.
 	\end{description}
@@ -735,7 +735,7 @@ gdy każdy skończony $X_0 \subset X$ jest spełnialny.
 		\item[$\Rightarrow$] trywialnie.
 		\item[$\Leftarrow$] Udowodnimy kontrapozycję: Gdy $X$ jest niespełnialny,
 		to istnieje skończony, niespełnialny $X_0 \subset X$.
-		Wyjmijmy dowolną formułę z $X = X' \cup {A}$
+		Wyjmijmy dowolną formułę z $X = X' \cup \{A\}$
 		i zastosujmy 2 poprzednie lematy:
 		$$\neg A \in Cn^M(X')$$
 		$$\neg A \in Cn^M(X'_0)$$
@@ -1110,14 +1110,14 @@ $\forall x_1 \ldots \forall x_n
       \max(1 - \text{val}^{M,v}(\phi), \mathrm{val}^{M,v}(\psi))$
       ($\phi$, $\psi$ -- formuły)
     \item Pozostałe spójniki logiczne definiujemy analogicznie
-    \item $\text{val}^{M,v}(\forall x \Psi) = \begin{cases}
+    \item $\text{val}^{M,v}(\exists x \Psi) = \begin{cases}
         1 & \text{gdy istnieje } d \in D \text{ takie, że }
         \text{val}^{M,v'}(\Psi) = 1 \\
         0 & \text{wpp}
       \end{cases}$, gdzie $v'$ jest wartościowaniem $v$ z~$x$ podmienionym
       na $d$: $v'(\phi) = \begin{cases} v(\phi) & \text{gdy } \phi \ne x \\
       d & \text{gdy } \phi = x \end{cases}$
-    \item $\text{val}^{M,v}(\exists x \Psi)$ definiujemy analogicznie
+    \item $\text{val}^{M,v}(\forall x \Psi)$ definiujemy analogicznie
   \end{itemize}
 
   Zauważmy, że jeśli $\Phi$ jest formułą domkniętą, to jej interpretacja
@@ -1269,6 +1269,8 @@ $\exists v~\text{ADD}(s(0), v, s(s(0)))$.
       node[left]{$y := s(0)$}
     };
 \end{tikzpicture}
+
+\qedhere
 \end{center}
 \end{proof}
 
