@@ -1398,7 +1398,8 @@ $L$ -- krata zupełna, $T : L \to L$ -- monotoniczna, to $lfp(T)$ i $gfp(T)$ ist
 \begin{proof}{(dla $lfp$, $gfp$ jest analogiczny)}
 
 $G = \lbrace x \in L : T(x) \leq x \rbrace \neq \emptyset$, bo $\top \in G$. Niech $g = \sqcap G$.
-$\forall x \in G : g \leq x$. Ponieważ $T : L \to L$, możemy tę równość obłożyć $T$ z obu stron otrzymując
+$\forall x \in G : g \leq x$. Ponieważ $T : L \to L$ jest monotoniczna, możemy
+tę równość obłożyć $T$ z obu stron otrzymując
 $\forall x \in G : T(g) \leq T(x)$. Zauważmy, że dodatkowo zachodzi $T(x) \leq x$ z definicji $G$. Zatem mamy
 $\forall x \in G : T(g) \leq x$. Ponieważ $T(g)$ jest ograniczeniem dolnym dla $G$ mamy $T(g) \leq g$, zatem $T(g) \in G$.
 Z drugiej strony również $T(g) \in G$, bo $T(T(g)) \leq T(g)$. Ale też $T(g) \geq g$, więc $T(g) = g$.
@@ -1472,7 +1473,8 @@ W przypadku liczby granicznej nie będącej zerem, iteracja wygląda następują
 \begin{lemma}
  $T(\sqcup X) \geq \sqcup \overrightarrow{T}(X)$
  \begin{proof}
- $\forall a \in X: T(a) \leq T(\sqcup X)$, więc $T(\sqcup X)$ jest górnym ograniczeniem $T(a), a \in X$.
+ $\forall a \in X: T(a) \leq T(\sqcup X)$, więc $T(\sqcup X)$ jest górnym
+ ograniczeniem $T(a)$ dla $a \in X$.
  \end{proof}
 \end{lemma}
 
@@ -1585,8 +1587,10 @@ $2^{B_L}$ - krata zupełna. $\sqcup$ - $\sup$ to jest $\bigcup$, $\sqcap$ - $\in
 \begin{lemma}
 $P$ - program. $T_P : 2^{B_L} \rightarrow 2^{B_L}$ - funkcja monotoniczna\\
 Niech $X \subset 2^{B_L}$ będzie skierowaną rodziną interpretacji Herbranda.\\
-($X \subset L$ jest skierowany, gdy dla $x_1, x_2 \in X, \exists_{x_3\in X} x_3 \geq x_1 \wedge x_3 \geq x_1$)\\
-$\{A_1, \ldots, A_n\} \subset \bigcup_{I\in X} I \iff \{A_1, \ldots, A_n \} \subset I$ dla pewnego $I\in X$.
+($X \subset L$ jest skierowany, gdy dla $x_1, x_2 \in X, \exists_{x_3\in X} x_3
+\geq x_1 \wedge x_3 \geq x_2$)\\
+Wtedy $\{A_1, \ldots, A_n\} \subset \bigcup_{I\in X} I \iff
+\{A_1, \ldots, A_n \} \subset I$ dla pewnego $I\in X$.
 \end{lemma}
 
 \begin{theorem}
@@ -1597,8 +1601,8 @@ $\supset$ tak jest zawsze, bo monotoniczna.\\
 $\subset$
 \begin{enumerate}
 \item $A' \in T_p(\bigcup_{I\in X} I)$
-\item $A' \leftarrow B_1', \ldots, B_n' - instrukcja stała (A \leftarrow B_1, \ldots, B_n) \in P \{B_1', \ldots, B_n' \} \subset \bigcup_{I\in X} I$
-\item $A' \leftarrow B_1', \ldots, B_n'$ - instrukcja stała $(A \leftarrow B_1, \ldots, B_n) \in P \{B_1', \ldots, B_n' \} \subset I$ (z poprzedniego lematu)
+\item $A' \leftarrow B_1', \ldots, B_n'$ -- instrukcja stała $(A \leftarrow B_1, \ldots, B_n) \in P \{B_1', \ldots, B_n' \} \subset \bigcup_{I\in X} I$
+\item $A' \leftarrow B_1', \ldots, B_n'$ -- instrukcja stała $(A \leftarrow B_1, \ldots, B_n) \in P \{B_1', \ldots, B_n' \} \subset I$ (z poprzedniego lematu)
 \item $A' \in T_P(I), I\in X$
 \item $A' \in \bigcup T_P(I)$
 \end{enumerate}
@@ -1612,43 +1616,53 @@ $I\in 2^{B_L}$ jest modelem dla $P$ wtw $T_P(I) \subset I$\\
 \end{itemize}
 \end{theorem}
 
-$\Rightarrow$ Niech $A' \in T_P(I), A' \leftarrow B_1', \ldots, B_n'$ instancja stała, jest taka, że $\{B_1', \ldots, B_n'\} \subset I$, a $I$ jest modelem, $A' \leftarrow B_1', \ldots, B_n'$  jest prawdziwa w $I$, więc $A' \in I$
+$\Rightarrow$ Niech $A' \in T_P(I), A' \leftarrow B_1', \ldots, B_n'$ -- instancja stała, jest taka, że $\{B_1', \ldots, B_n'\} \subset I$, a $I$ jest modelem, $A' \leftarrow B_1', \ldots, B_n'$  jest prawdziwa w $I$, więc $A' \in I$
 
-$\Leftarrow$ Niech $A \leftarrow B_1, \ldots B_n instrukcja, A' \leftarrow B_1', \ldots, B_n'$ instrukcja stała.\\
-Niech $\{B_1', \ldots, B_n' \} \subset I, to {A'} \subset T_P(I) \subset I \implies A'\in I$. Czyli $I$ jest modelem.
+$\Leftarrow$ Niech $A \leftarrow B_1, \ldots B_n$ -- instrukcja, $A' \leftarrow B_1', \ldots, B_n'$ instrukcja stała.\\
+Niech $\{B_1', \ldots, B_n' \} \subset I, to {A'} \in T_P(I) \subset I \implies A'\in I$. Czyli $I$ jest modelem.
 
 \begin{theorem}[Kowalski, van Emden]
 $M_P = lfp(T_P) = T_P\uparrow\omega$
 \end{theorem}
 
 \begin{proof}
-$M_P = \bigcap \{ I : I jest modelem dla P \}$\\
-$M_P = \bigcap \{ I \in 2^{B_L} : T_P(I) \subset I\} = \sqcup \{ I : T_P(I) \leq I\} = lfp(T_P) = T_P\uparrow\omega$
+  $M_P = \bigcap \{ I : I \text{ jest modelem dla P}\}$\\
+  $M_P = \bigcap \{ I \in 2^{B_L} : T_P(I) \subset I\} = \sqcup \{ I : T_P(I) \leq I\} = lfp(T_P) = T_P\uparrow\omega$
 \end{proof}
 
 \section{Rezolucja zdaniowa (Robinsona)}
 \begin{enumerate}
-\item Formaty za spójnikami $\vee$, $\wedge$, $\neg$, zmienna zdaniowa.
-\item Wartościowanie
-\item Tautologia i spełnialność
-\item Formuły mają postać normalną w postaci koniunkcji klauzul.
-\item Operacje na klauzulach (rezolwenta)
+\item Formuły przy spójnikach $\vee$, $\wedge$, $\neg$ i~zmienne zdaniowe.
+\item Wartościowanie.
+\item Tautologia i spełnialność.
+\item Formuły mają postać normalną w postaci koniunkcji klauzul (każda klauzula
+  to alternatywa literałów).
+\item Operacja na klauzulach:
+  \begin{definition}[Rezolwenta]
+  Rezolwentą klauzul $C = L \vee P_1\vee \ldots \vee P_n$ i~
+    $C' = \neg L \vee R_1\vee \ldots \vee R_k$ jest $R = P_1\vee \ldots
+    \vee P_n \vee R_1\vee \ldots \vee R_k$.
+  \end{definition}
 \end{enumerate}
-$$C = L \vee P_1\vee \ldots \vee P_n$$
-$$C' = \neg L \vee R_1\vee \ldots \vee R_n$$
-rezolwenta to $P_1\vee \ldots \vee P_n \vee R_1\vee \ldots \vee R_n$
 
-\header{Fakt.} $R \in C_n^M(C,C'))$ (konsekwencja matrycowa)\\
-Niech $f$ wartościowanie, $f : \text{zmienna} \rightarrow \{0, 1\}$.\\
-$f(C)=1$, gdy $f(L) = 1$ lub $\exists_{1\leq i \leq n} f(P_i) = 1$\\
-$f(C')=1$, gdy $f(C') = 1$ lub $\exists_{1\leq j \leq k} f(P_k) = 1$\\
-\textbf{tu powyżej jest coś grubo nie tak}\\
-$\left.
-\begin{array}{l}
-f(L) = 1 \implies \exists_{1\leq j\leq k} f(R_j) = 1\\
-f(\neg L) = 1 \implies \exists_{1\leq i\leq n} f(P_i) = 1
-\end{array}
-\right\} P(R) = 1$
+\header{Fakt.} Jeśli $R$ jest rezolwentą klauzul $C$ i~$C'$ to $R \in
+Cn^M(C,C')$ (konsekwencja matrycowa).\\
+\begin{proof}
+Niech $f$ będzie wartościowaniem, $f : \text{zmienne} \rightarrow \{0, 1\}$
+takie, że klauzule $C$ i~$C'$ są prawdziwe.
+\begin{align*}
+  f(C) &=1,\text{ gdy }f(L) = 1\text{ lub }\exists_{1\leq i \leq n} f(P_i) = 1\\
+  f(C') &=1,\text{ gdy }f(\neg L) = 1\text{ lub }\exists_{1\leq j \leq k} f(R_j) = 1
+\end{align*}
+Zatem zawsze znajdziemy prawdziwe $P_i$ lub $R_j$:
+\[\left.
+  \begin{array}{l}
+  f(L) = 1 \implies \exists_{1\leq j\leq k} f(R_j) = 1\\
+  f(\neg L) = 1 \implies \exists_{1\leq i\leq n} f(P_i) = 1
+  \end{array}
+  \right\} f(R) = 1
+\]
+\end{proof}
 
 \begin{definition}
 Dowodem klauzuli $C$ ze zbioru klauzul $S$ jest ciąg klauzul $C_1, \ldots, C_p = C$, takie że dla każdego $C_i \in S$ lub $C_i$ jest rezolwentą wcześniejszego ciągu.
@@ -1656,13 +1670,15 @@ Dowodem klauzuli $C$ ze zbioru klauzul $S$ jest ciąg klauzul $C_1, \ldots, C_p 
 
 
 \begin{definition}
-Obaleniem zbioru $S$ jest dowód klauzuli pustej.
+  Obaleniem (ang. \emph{refutation}) zbioru $S$ jest dowód klauzuli pustej.
+  Klauzulę pustą oznacza się czasem: $\square$.
 \end{definition}
 
 \begin{lemma}
-$x_1, \ldots, x_r, y_1, \ldots, y_s$, $E_{ij} = x_i \vee y_j$\\
-$E_{ij}$ są spełniane przez wartościowanie $f$.\\
-Wtedy $x_1, \ldots, x_r$ jest spełnione przez $f$ lub $y_1, \ldots, y_s$ jest spełnione przez $f$. (trywialne)
+  Gdy dla zmiennych $x_1, \ldots, x_r, y_1, \ldots, y_s$ wszystkie
+  klauzule $E_{ij} = x_i \vee y_j$ są spełniane przez wartościowanie $f$
+  to wszystkie $x_1, \ldots, x_r$ są spełnione przez $f$ lub wszystkie
+  $y_1, \ldots, y_s$ są spełnione przez $f$. (trywialne)
 \end{lemma}
 
 
@@ -1670,17 +1686,23 @@ Wtedy $x_1, \ldots, x_r$ jest spełnione przez $f$ lub $y_1, \ldots, y_s$ jest s
 $S$ jest minimalnym zbiorem klauzul niespełnialnych, kiedy każdy $S' \subsetneq S$ jest już spełnialny.
 \end{definition}
 
-\header{UWAGA 1} Jak $C \in S$ i $S$ jest minimalnym zbiorem niespełnialnym to w $C$ nie ma sprzecznych literałów.\\
-\header{UWAGA 2} $S$ - minimalny niespełnialny to każda zmienna ma pozytywne i negatywne wystąpienia w $S$.
+\begin{remark}
+  Jak $C \in S$ i $S$ jest minimalnym zbiorem niespełnialnym to w~$C$ nie ma
+  sprzecznych literałów.
+\end{remark}
+\begin{remark}
+  Jeśli $S$ -- minimalny niespełnialny to każda zmienna ma pozytywne i~negatywne
+  wystąpienia w $S$.
+\end{remark}
 
-\begin{theorem}
-$S$ ma obalenie to $S$ niespełnialna.
+\begin{theorem}[O niesprzeczności]
+$S$ ma obalenie to $S$ niespełnialny.
+\begin{proof}
+$C_1, \ldots, C_p = \square$, zatem $f(\square) = true$, sprzeczność.
+\end{proof}
 \end{theorem}
-$\Rightarrow$ $C_1, \ldots, C_p = \square$, nie wprost $f(\square) = true$, sprzeczność.
-$\Leftarrow$ \\
-\begin{theorem}[o pełności metody rezolucji dla logiki zdaniowej]
+\begin{theorem}[O pełności metody rezolucji dla logiki zdaniowej]
 Jeśli $S$ jest niespełnialnym zbiorem klauzul to $S$ ma obalenie.
-\end{theorem}
 \begin{proof}
 Niespełnialny zbiór klauzul $S$ najpierw sprowadzamy do minimalnego niespełnialnego zbioru klauzul.
 Następnie dowodzimy przez indukcję ze względu na liczbę zmiennych w $S$.\\
@@ -1710,6 +1732,7 @@ $$P_1,\ldots,P_w$$
 Jako obalenie $S$ możemy wziąć teraz
 $$E_{1,1},\ldots,E_{k,l},P_1,\ldots,P_w$$
 \end{proof}
+\end{theorem}
 \begin{remark}
 Ta procedura pokazuje sprowadzenie $kSAT$ do $3SAT$. Każdą klauzulę $a_1 \vee \ldots \vee a_n$
 rozdzielając w miejscu $k$ i dodając nową zmienną $p$. Otrzymujemy teraz dwie mniejsze klauzule
@@ -1719,7 +1742,7 @@ Niestety, klauzule $3SAT$u już nie są rozszerzalne w ten sposób.
 \end{remark}
 \section{Drzewa semantyczne}
 Niech $L$ będzie językiem pierwszego rzędu, zaś $S$ zbiorem klauzul pierwszego rzędu.\\
-$U_L$ - uniwersum Herbranda dla $L$, $B_L = \{B_0,\ldots,B_1\}$ - baza Herbranda dla $L$.
+$U_L$ - uniwersum Herbranda dla $L$, $B_L = \{B_0,B_1,\ldots\}$ - baza Herbranda dla $L$.
 \begin{definition}
 Drzewo semantyczne dla $S$ to drzewo binarne etykietowane (na krawędziach) elementami z $B_L$.
 Na poziomie $n$-tym wszystkie etykiety są albo $B_k$ albo $\lnot B_k$ dla pewnego $k$ zależnego od $n$.
@@ -1742,7 +1765,7 @@ Drzewo semantyczne jest domknięte, gdy na każdej gałęzi jest porażka.
 \begin{example}
 \begin{itemize}
 Niech $S$ składa się z klauzul:
- \item $C_1 = P(x)$ (tłumaczenie: $\forall_x P(x)$
+ \item $C_1 = P(x)$ (tłumaczenie: $\forall_x P(x)$)
  \item $C_2 = P(x) \to Q(f(x))$ (tłumaczenie: $\forall_x \lnot P(x) \vee Q(f(x))$
  \item $C_3 = \lnot Q(f(a))$ (tłumaczenie: $\lnot Q(f(a))$
 \end{itemize}
