@@ -1830,11 +1830,11 @@ Rezolucja:
 $$\lnot \phi = (\forall_x (p(x) \to \forall_y(g(x,y) \leftrightarrow \lnot g(y,y)))) \wedge \exists_x p(x)$$
 Rozpada się to na klauzule (po skolemizacji):
 $$C_1 = \lnot p(x) \vee \lnot g(x,y) \vee \lnot g(y,y)$$
-$$C_2 = \lnot p(x) \vee \lnot g(y,y) \vee \lnot g(x,y)$$
+$$C_2 = \lnot p(x) \vee g(y,y) \vee g(x,y)$$
 $$C_3 = p(a)$$
 Rezolwujemy faktor $C_1$ ($\lnot p(z) \vee \lnot g(z,z)$) i faktor $C_2$ ($\lnot p(q) \vee g(q,q)$):
 $$C_4 = \lnot p(u)$$
-Rozolucja z $$C_3$$ daje nam ostateczne rozwiązanie.
+Rozolucja z $C_3$ daje nam ostateczne rozwiązanie.
 \end{example}
 \begin{example}
 Formuła: $\phi = p(0) \wedge (p(x) \to p(s(x))) \to \forall_x p(x)$.
